@@ -1,0 +1,3 @@
+- Tentando relacionar os TDBCombos da nota fiscal, (paciente-area da consulta).
+- Criar relatorio da nota fiscal.
+- Deixar o calendario puxando as informações de quem já esta com consulta marcada.
