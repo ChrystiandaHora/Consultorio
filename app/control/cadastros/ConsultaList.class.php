@@ -28,6 +28,7 @@ class ConsultaList extends TStandardList
         parent::setActiveRecord('consulta');   // defines the active record
         parent::addFilterField('area_do_medico_nome', '=', 'area_do_medico_nome'); // filterField, operator, formField
         parent::addFilterField('id', '=', 'id');
+        parent::addFilterField('titulo', '=', 'titulo');
         parent::addFilterField('paciente_id', '=', 'paciente_id');
         parent::addFilterField('medico_id', '=', 'medico_id');
         parent::addFilterField('telefone', '=', 'telefone');
@@ -48,6 +49,8 @@ class ConsultaList extends TStandardList
         $area_da_consulta->setChangeAction($action);
 
         $medico_id = new TDBCombo('medico_id','sample','medico','id','nome');
+        $titulo = new TCombo('titulo');
+        $titulo -> addItems(['Consulta - Primeira Vez'=>'Consulta - Primeira Vez com o Médico(a)','Consulta - Retorno'=>'Consulta - Retorno', 'Exame'=>'Realização de Exame']);
         $dtinicio = new  TDateTime ('dtinicio');
         $dtfim = new  TDateTime ('dtfim');
 
@@ -58,11 +61,13 @@ class ConsultaList extends TStandardList
         $dtfim->setDatabaseMask('yyyy-mm-dd hh:ii');
         
         // add the fields
-        $this->form->addFields( [new TLabel('ID')], [$id] ,[new TLabel('Paciente')], [$paciente_id]);
+        $this->form->addFields( [new TLabel('ID')], [$id]);
+        $this->form->addFields( [new TLabel('Título')], [$titulo] ,[new TLabel('Paciente')], [$paciente_id]);
         $this->form->addFields( [new TLabel('Médico')], [$medico_id], [new TLabel('Área da Consulta')], [$area_da_consulta]);
         $this->form->addFields([new TLabel('Data Início da Consulta')], [$dtinicio] , [new TLabel('Data Fim da Consulta')],[$dtfim]);
 
         $id->setSize('400');
+        $titulo->setSize('400');
         $area_da_consulta->setSize('400');
         $paciente_id->setSize('400');
         $medico_id->setSize('400');
@@ -87,6 +92,7 @@ class ConsultaList extends TStandardList
         // creates the datagrid columns
         $column_id = new TDataGridColumn('id', 'Id', 'center', 50);
         $column_paciente_id = new TDataGridColumn('nome_paciente', ('Paciente'), 'left');
+        $column_titulo = new TDataGridColumn('titulo', ('Título'), 'left');
         $column_area_da_consulta = new TDataGridColumn('area_do_medico_nome', ('Área da Consulta'), 'left');
         $column_medico_id = new TDataGridColumn('nome_medico', ('Médico'), 'left');
         $column_dia_inicio = new TDataGridColumn('dtinicio', ('Data Início da Consulta'), 'left');
@@ -98,6 +104,7 @@ class ConsultaList extends TStandardList
         $this->datagrid->addColumn($column_paciente_id);
         $this->datagrid->addColumn($column_area_da_consulta);
         $this->datagrid->addColumn($column_medico_id);
+        $this->datagrid->addColumn($column_titulo);
         $this->datagrid->addColumn($column_dia_inicio); 
         $this->datagrid->addColumn($column_dia_fim); 
 
@@ -116,6 +123,10 @@ class ConsultaList extends TStandardList
         $order_dia_da_consulta = new TAction(array($this, 'onReload'));
         $order_dia_da_consulta->setParameter('order', 'area_do_medico_nome');
         $column_area_da_consulta->setAction($order_dia_da_consulta);
+
+        $order_titulo = new TAction(array($this, 'onReload'));
+        $order_titulo->setParameter('order', 'titulo');
+        $column_titulo->setAction($order_titulo);
 
         $order_medico_id = new TAction(array($this, 'onReload'));
         $order_medico_id->setParameter('order', 'medico_id');

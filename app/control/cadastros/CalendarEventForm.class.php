@@ -9,6 +9,8 @@
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
  * @license    http://www.adianti.com.br/framework-license
  */
+
+
 class CalendarEventForm extends TWindow
 {
     protected $form; // form
@@ -21,7 +23,7 @@ class CalendarEventForm extends TWindow
     {
         parent::__construct();
         parent::setSize(700, null);
-        parent::setTitle('Calendar Event');
+        parent::setTitle('Evento do Calendario');
         parent::removePadding();
         
         // creates the form
@@ -30,7 +32,7 @@ class CalendarEventForm extends TWindow
         
         $hours = array();
         $minutes = array();
-        for ($n=0; $n<24; $n++)
+        for ($n = 8; $n <= 18; $n++)
         {
             $hours[$n] = str_pad($n, 2, '0', STR_PAD_LEFT);
         }
@@ -44,11 +46,19 @@ class CalendarEventForm extends TWindow
         $view           = new THidden('view');
         $id             = new TEntry('id');
         $start_date     = new TDate('start_date');
+        $start_date     ->setOption('minDate', Date('d/m/Y'));
+        $start_date     ->setOption('disabledDays', [7]);
+        $start_date     ->setMask( "dd/mm/yyyy" );
+        $start_date     ->setDatabaseMask("yyyy-mm-dd");        
         $start_hour     = new TCombo('start_hour');
         $start_minute   = new TCombo('start_minute');
         $end_date       = new TDate('end_date');
+        $end_date       ->setMask( "dd/mm/yyyy" );
+        $end_date       ->setDatabaseMask("yyyy-mm-dd");
         $end_hour       = new TCombo('end_hour');
         $end_minute     = new TCombo('end_minute');
+        $titulo         = new TCombo('titulo');
+        $titulo -> addItems(['Consulta - Primeira Vez'=>'Consulta - Primeira Vez com o Médico(a)','Consulta - Retorno'=>'Consulta - Retorno', 'Exame'=>'Realização de Exame']); 
         
         $start_hour->addItems($hours);
         $start_minute->addItems($minutes);
@@ -65,6 +75,8 @@ class CalendarEventForm extends TWindow
         $end_hour->setSize(70);
         $start_minute->setSize(70);
         $end_minute->setSize(70);
+        $titulo->setSize(400);
+
         
         $start_hour->setChangeAction(new TAction(array($this, 'onChangeStartHour')));
         $end_hour->setChangeAction(new TAction(array($this, 'onChangeEndHour')));
@@ -74,8 +86,9 @@ class CalendarEventForm extends TWindow
         // add one row for each form field
         $this->form->addFields( [$view] );
         $this->form->addFields( [new TLabel('ID:')], [$id] );
-        $this->form->addFields( [new TLabel('Start time:')], [$start_date, $start_hour, ':', $start_minute] );
-        $this->form->addFields( [new TLabel('End time:')], [$end_date, $end_hour, ':', $end_minute] );
+        $this->form->addFields( [new TLabel('Hora de Início:')], [$start_date, $start_hour, ':', $start_minute] );
+        $this->form->addFields( [new TLabel('Hora do Fim:')], [$end_date, $end_hour, ':', $end_minute] );
+        $this->form->addFields( [new TLabel('titulo:')], [$titulo] );
         
         $this->form->addAction( _t('Save'),   new TAction(array($this, 'onSave')),   'fa:save green');
         $this->form->addAction( _t('Clear'),  new TAction(array($this, 'onEdit')),   'fa:eraser orange');
@@ -161,7 +174,8 @@ class CalendarEventForm extends TWindow
             $data = $this->form->getData();
             
             $object = new Vw_calendario;
-            $object->id = $data->id;
+            $object->id       = $data->id;
+            $object->titulo   = $data->titulo;
             $object->dtinicio = $data->start_date . ' ' . str_pad($data->start_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->start_minute, 2, '0', STR_PAD_LEFT) . ':00';
             $object->dtinicio = $data->end_date . ' ' . str_pad($data->end_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->end_minute, 2, '0', STR_PAD_LEFT) . ':00';
             
@@ -171,7 +185,7 @@ class CalendarEventForm extends TWindow
             $this->form->setData($data); // keep form data
             
             TTransaction::close(); // close the transaction
-            $posAction = new TAction(array('FullCalendarDatabaseView', 'onReload'));
+            $posAction = new TAction(array('Calendario', 'onReload'));
             $posAction->setParameter('view', $data->view);
             $posAction->setParameter('date', $data->start_date);
             
@@ -210,17 +224,22 @@ class CalendarEventForm extends TWindow
                 $object = new Vw_calendario($key);
                 
                 $data = new stdClass;
-                $data->id = $object->id;
-                $data->start_date = substr($object->dtinicio,0,10);
-                $data->start_hour = substr($object->dtinicio,11,2);
-                $data->start_minute = substr($object->dtinicio,14,2);
-                $data->end_date = substr($object->dtfim,0,10);
-                $data->end_hour = substr($object->dtfim,11,2);
-                $data->end_minute = substr($object->dtfim,14,2);
-                $data->view = $param['view'];
+                $data->id            = $object->id;
+                $data->titulo        = $object->titulo;
+                $data->start_date    = substr($object->dtinicio,0,10);
+                $data->start_hour    = substr($object->dtinicio,11,2);
+                $data->start_minute  = substr($object->dtinicio,14,2);
+                $data->end_date      = substr($object->dtfim,0,10);
+                $data->end_hour      = substr($object->dtfim,11,2);
+                $data->end_minute    = substr($object->dtfim,14,2);
+                $data->view          = $param['view'];
                 
                 // fill the form with the active record data
                 $this->form->setData($data);
+
+                if ($data->start_date < date("Y-m-d")) {
+                    $this->form->setEditable(false);
+                }
                 
                 // close the transaction
                 TTransaction::close();
@@ -274,7 +293,7 @@ class CalendarEventForm extends TWindow
             // close the transaction
             TTransaction::close();
             
-            $posAction = new TAction(array('FullCalendarDatabaseView', 'onReload'));
+            $posAction = new TAction(array('Calendario', 'onReload'));
             $posAction->setParameter('view', $param['view']);
             $posAction->setParameter('date', $param['start_date']);
             
@@ -337,7 +356,7 @@ class CalendarEventForm extends TWindow
                 
                 // instantiates object CalendarEvent
                 $object = new Vw_calendario($key);
-                $object->dtinicio = str_replace('T', ' ', $param['dtinicio']);
+                $object->dtinicio   = str_replace('T', ' ', $param['dtinicio']);
                 $object->dtinicio   = str_replace('T', ' ', $param['dtfim']);
                 $object->store();
                                 

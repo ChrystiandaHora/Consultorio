@@ -26,6 +26,8 @@ class Calendario extends TPage
         $this->fc->setEventUpdateAction(new TAction(array('CalendarEventForm', 'onUpdateEvent')));
         
         $this->fc->setOption('businessHours', [ [ 'dow' => [ 1, 2, 3, 4, 5 ], 'start' => '08:00', 'end' => '18:00' ]]);
+        $this->fc->setOption('slotDuration', '00:20');
+        $this->fc->setOption('slotLabelInterval', '00:20');
         $this->fc->setTimeRange('08:00', '18:00');
         // $this->fc->disableDragging();
         // $this->fc->disableResizing();
@@ -53,8 +55,8 @@ class Calendario extends TPage
                     $event_array['start'] = str_replace( ' ', 'T', $event_array['dtinicio']);
                     $event_array['end']   = str_replace( ' ', 'T', $event_array['dtfim']);
                     
-                    $popover_content = $event->render("<b>Medico</b>: {M_nome} <br> <b>Paciente</b>: {P_nome}");
-                    $event_array['medico_id'] = TFullCalendar::renderPopover($event_array['medico_id'], 'Popover medico_id', $popover_content);
+                    $popover_content = $event->render("<b>Medico</b>: {medico_id} <br> <b>Paciente</b>: {paciente_id}");
+                    $event_array['title'] = TFullCalendar::renderPopover($event_array['titulo'], 'Tipo de Evento', $popover_content);
                     
                     $return[] = $event_array;
                 }

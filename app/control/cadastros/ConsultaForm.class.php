@@ -38,6 +38,8 @@ class ConsultaForm extends TStandardForm
         $area_do_medico_nome->setChangeAction($action);
         
         $paciente_id = new TDBCombo('paciente_id','permission','paciente','id','nome');
+        $titulo = new TCombo('titulo');
+        $titulo -> addItems(['Consulta - Primeira Vez'=>'Consulta - Primeira Vez com o Médico(a)','Consulta - Retorno'=>'Consulta - Retorno', 'Exame'=>'Realização de Exame']);        
         $medico_id = new TDBCombo('medico_id','permission','medico','id','nome');
         $dtinicio = new  TDateTime ('dtinicio');
         $dtfim = new  TDateTime ('dtfim');
@@ -49,18 +51,22 @@ class ConsultaForm extends TStandardForm
         $dtfim->setDatabaseMask('yyyy-mm-dd hh:ii');
         
         // add the fields
-        $this->form->addFields( [new TLabel('ID')], [$id] ,[new TLabel('Paciente')], [$paciente_id]);
+        $this->form->addFields( [new TLabel('ID')], [$id]);
+        $this->form->addFields( [new TLabel('Título')], [$titulo] ,[new TLabel('Paciente')], [$paciente_id]);
         $this->form->addFields( [new TLabel('Médico')], [$medico_id], [new TLabel('Área da Consulta')], [$area_do_medico_nome]);
         $this->form->addFields([new TLabel('Data Início da Consulta')], [$dtinicio] , [new TLabel('Data Fim da Consulta')],[$dtfim]);
         
         $id->setEditable(FALSE);
-        $id->setSize('80%');
+        $id->setSize('30%');
         
         $area_do_medico_nome->setSize('80%');
         $area_do_medico_nome->addValidation(('Área da Consulta'), new TRequiredValidator );
         
         $paciente_id->setSize('80%');
         $paciente_id->addValidation(('Paciente'), new TRequiredValidator );
+
+        $titulo->setSize('80%');
+        $titulo->addValidation(('Médico'), new TRequiredValidator );
         
         $medico_id->setSize('80%');
         $medico_id->addValidation(('Médico'), new TRequiredValidator );

@@ -26,6 +26,7 @@ class Consulta extends TRecord
         parent::__construct($id, $callObjectLoad);
         parent::addAttribute('area_do_medico_nome');
         parent::addAttribute('paciente_id');
+        parent::addAttribute('titulo');
         parent::addAttribute('medico_id');
         parent::addAttribute('dtinicio');
         parent::addAttribute('dtfim');
