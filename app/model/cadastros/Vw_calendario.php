@@ -14,4 +14,15 @@ class Vw_calendario extends TRecord
     const TABLENAME = 'consulta';
     const PRIMARYKEY= 'id';
     const IDPOLICY =  'serial'; // {max, serial}
+
+    public function __construct($id = NULL, $callObjectLoad = TRUE)
+    {
+        parent::__construct($id, $callObjectLoad);
+        parent::addAttribute('paciente_id');
+        parent::addAttribute('titulo');
+        parent::addAttribute('medico_id');
+        parent::addAttribute('area_do_medico_nome');
+        parent::addAttribute('dtinicio');
+        parent::addAttribute('dtfim');
+    }
 }

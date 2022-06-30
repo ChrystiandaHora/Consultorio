@@ -46,8 +46,6 @@ class CalendarEventForm extends TWindow
         $view           = new THidden('view');
         $id             = new TEntry('id');
         $start_date     = new TDate('start_date');
-        $start_date     ->setOption('minDate', Date('d/m/Y'));
-        $start_date     ->setOption('disabledDays', [7]);
         $start_date     ->setMask( "dd/mm/yyyy" );
         $start_date     ->setDatabaseMask("yyyy-mm-dd");        
         $start_hour     = new TCombo('start_hour');
@@ -88,7 +86,7 @@ class CalendarEventForm extends TWindow
         $this->form->addFields( [new TLabel('ID:')], [$id] );
         $this->form->addFields( [new TLabel('Hora de Início:')], [$start_date, $start_hour, ':', $start_minute] );
         $this->form->addFields( [new TLabel('Hora do Fim:')], [$end_date, $end_hour, ':', $end_minute] );
-        $this->form->addFields( [new TLabel('titulo:')], [$titulo] );
+        $this->form->addFields( [new TLabel('Título:')], [$titulo] );
         
         $this->form->addAction( _t('Save'),   new TAction(array($this, 'onSave')),   'fa:save green');
         $this->form->addAction( _t('Clear'),  new TAction(array($this, 'onEdit')),   'fa:eraser orange');
