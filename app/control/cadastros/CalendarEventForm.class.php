@@ -58,7 +58,7 @@ class CalendarEventForm extends TWindow
         $end_hour       = new TCombo('end_hour');
         $end_minute     = new TCombo('end_minute');
         $titulo         = new TCombo('titulo');
-        $titulo -> addItems(['Consulta - Primeira Vez'=>'Consulta - Primeira Vez com o Médico(a)','Consulta - Retorno'=>'Consulta - Retorno', 'Exame'=>'Realização de Exame']); 
+        $titulo -> addItems(['Vw_calendario - Primeira Vez'=>'Vw_calendario - Primeira Vez com o Médico(a)','Vw_calendario - Retorno'=>'Vw_calendario - Retorno', 'Exame'=>'Realização de Exame']); 
         
         $start_hour->addItems($hours);
         $start_minute->addItems($minutes);
@@ -177,7 +177,7 @@ class CalendarEventForm extends TWindow
             $object->id       = $data->id;
             $object->titulo   = $data->titulo;
             $object->dtinicio = $data->start_date . ' ' . str_pad($data->start_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->start_minute, 2, '0', STR_PAD_LEFT) . ':00';
-            $object->dtinicio = $data->end_date . ' ' . str_pad($data->end_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->end_minute, 2, '0', STR_PAD_LEFT) . ':00';
+            $object->dtfim    = $data->end_date . ' ' . str_pad($data->end_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->end_minute, 2, '0', STR_PAD_LEFT) . ':00';
             
             $object->store(); // stores the object
             
@@ -220,7 +220,7 @@ class CalendarEventForm extends TWindow
                 // open a transaction with database 'sample'
                 TTransaction::open('sample');
                 
-                // instantiates objectVw_calendario
+                // instantiates object Vw_calendario
                 $object = new Vw_calendario($key);
                 
                 $data = new stdClass;
@@ -236,10 +236,6 @@ class CalendarEventForm extends TWindow
                 
                 // fill the form with the active record data
                 $this->form->setData($data);
-
-                if ($data->start_date < date("Y-m-d")) {
-                    $this->form->setEditable(false);
-                }
                 
                 // close the transaction
                 TTransaction::close();
