@@ -58,7 +58,7 @@ class CalendarEventForm extends TWindow
         $end_hour       = new TCombo('end_hour');
         $end_minute     = new TCombo('end_minute');
         $titulo         = new TCombo('titulo');
-        $titulo -> addItems(['Vw_calendario - Primeira Vez'=>'Vw_calendario - Primeira Vez com o Médico(a)','Vw_calendario - Retorno'=>'Vw_calendario - Retorno', 'Exame'=>'Realização de Exame']); 
+        $titulo -> addItems(['Consulta - Primeira Vez'=>'Consulta - Primeira Vez com o Médico(a)','Consulta - Retorno'=>'Consulta - Retorno', 'Exame'=>'Realização de Exame']); 
         
         $start_hour->addItems($hours);
         $start_minute->addItems($minutes);
