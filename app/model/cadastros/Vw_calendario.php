@@ -39,4 +39,11 @@ class Vw_calendario extends TRecord
             $this->paciente = new Paciente($this->paciente_id);
         return $this->paciente->nome;
     }
+
+    public function get_area_do_medico_nome()
+    {
+        if (empty($this->medico))
+            $this->medico = new Medico($this->medico_id);
+        return $this->medico->area_do_medico;
+    }
 }

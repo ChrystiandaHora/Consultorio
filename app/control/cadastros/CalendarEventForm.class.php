@@ -41,6 +41,11 @@ class CalendarEventForm extends TWindow
         // create the form fields
         $view           = new THidden('view');
         $id             = new TEntry('id');
+        $area_do_medico_nome = new TDBCombo('area_do_medico_nome','permission','medico','id','area_do_medico');
+        $action = new TAction([$this, 'mudaSelecao']);
+        $area_do_medico_nome->setChangeAction($action);
+        $medico_id      = new TDBCombo('medico_id','permission','medico','id','nome');
+        $paciente_id    = new TDBCombo('paciente_id','permission','paciente','id','nome');
         $start_date     = new TDate('start_date');
         $start_date     ->setMask( "dd/mm/yyyy" );
         $start_date     ->setDatabaseMask("yyyy-mm-dd");        
@@ -63,13 +68,16 @@ class CalendarEventForm extends TWindow
         
         // define the sizes
         $id->setSize(40);
-        $start_date->setSize(120);
-        $end_date->setSize(120);
+        $start_date->setSize(200);
+        $end_date->setSize(200);
         $start_hour->setSize(70);
         $end_hour->setSize(70);
         $start_minute->setSize(70);
         $end_minute->setSize(70);
-        $titulo->setSize(400);
+        $titulo->setSize(300);
+        $medico_id->setSize(300);
+        $paciente_id->setSize(300);
+        $area_do_medico_nome->setSize(300);
 
         
         $start_hour->setChangeAction(new TAction(array($this, 'onChangeStartHour')));
@@ -80,9 +88,9 @@ class CalendarEventForm extends TWindow
         // add one row for each form field
         $this->form->addFields( [$view] );
         $this->form->addFields( [new TLabel('ID:')], [$id] );
-        $this->form->addFields( [new TLabel('Hora de Início:')], [$start_date, $start_hour, ':', $start_minute] );
-        $this->form->addFields( [new TLabel('Hora do Fim:')], [$end_date, $end_hour, ':', $end_minute] );
-        $this->form->addFields( [new TLabel('Título:')], [$titulo] );
+        $this->form->addFields( [new TLabel('Título:')], [$titulo] ,[new TLabel('Área:')], [$area_do_medico_nome] );
+        $this->form->addFields( [new TLabel('Médico:')], [$medico_id] ,[new TLabel('Paciente:')], [$paciente_id] );
+        $this->form->addFields( [new TLabel('Hora de Início:')], [$start_date, $start_hour, ':', $start_minute] ,[new TLabel('Hora do Fim:')], [$end_date, $end_hour, ':', $end_minute] );
         
         $this->form->addAction( _t('Save'),   new TAction(array($this, 'onSave')),   'fa:save green');
         $this->form->addAction( _t('Clear'),  new TAction(array($this, 'onEdit')),   'fa:eraser orange');
@@ -152,10 +160,13 @@ class CalendarEventForm extends TWindow
             $data = $this->form->getData();
             
             $object = new Vw_calendario;
-            $object->id       = $data->id;
-            $object->titulo   = $data->titulo;
-            $object->dtinicio = $data->start_date . ' ' . str_pad($data->start_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->start_minute, 2, '0', STR_PAD_LEFT) . ':00';
-            $object->dtfim    = $data->end_date . ' ' . str_pad($data->end_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->end_minute, 2, '0', STR_PAD_LEFT) . ':00';
+            $object->id                    = $data->id;
+            $object->titulo               = $data->titulo;
+            $object->medico_id            = $data->medico_id;
+            $object->paciente_id          = $data->paciente_id;
+            $object->area_do_medico_nome  = $data->area_do_medico_nome;
+            $object->dtinicio             = $data->start_date . ' ' . str_pad($data->start_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->start_minute, 2, '0', STR_PAD_LEFT) . ':00';
+            $object->dtfim                = $data->end_date . ' ' . str_pad($data->end_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->end_minute, 2, '0', STR_PAD_LEFT) . ':00';
             
             $object->store(); // stores the object
             
@@ -198,15 +209,18 @@ class CalendarEventForm extends TWindow
                 $object = new Vw_calendario($key);
                 
                 $data = new stdClass;
-                $data->id            = $object->id;
-                $data->titulo        = $object->titulo;
-                $data->start_date    = substr($object->dtinicio,0,10);
-                $data->start_hour    = substr($object->dtinicio,11,2);
-                $data->start_minute  = substr($object->dtinicio,14,2);
-                $data->end_date      = substr($object->dtfim,0,10);
-                $data->end_hour      = substr($object->dtfim,11,2);
-                $data->end_minute    = substr($object->dtfim,14,2);
-                $data->view          = $param['view'];
+                $data->id                   = $object->id;
+                $data->titulo               = $object->titulo;
+                $data->medico_id            = $object->medico_id;
+                $data->paciente_id          = $object->paciente_id;
+                $data->area_do_medico_nome  = $object->area_do_medico_nome;
+                $data->start_date           = substr($object->dtinicio,0,10);
+                $data->start_hour           = substr($object->dtinicio,11,2);
+                $data->start_minute         = substr($object->dtinicio,14,2);
+                $data->end_date             = substr($object->dtfim,0,10);
+                $data->end_hour             = substr($object->dtfim,11,2);
+                $data->end_minute           = substr($object->dtfim,14,2);
+                $data->view                 = $param['view'];
                 
                 // fill the form with the active record data
                 $this->form->setData($data);
@@ -327,5 +341,21 @@ class CalendarEventForm extends TWindow
             new TMessage('error', $e->getMessage());
             TTransaction::rollback();
         }
+    }
+    static function mudaSelecao($param)
+    {
+        TTransaction::open('sample');
+        $conn = TTransaction::get();
+        //pegando o nome do medico baseado no seu id
+        $stmt = $conn->query('SELECT nome FROM medico WHERE id ='.$param["area_do_medico_nome"]);
+        $data = $stmt->fetchAll();
+        if($data)
+        {
+        foreach ($data as $row) {
+            $nome_medico_area =[$param["area_do_medico_nome"] => $row["nome"]];
+            }
+        }
+        TCombo::reload('form_event', 'medico_id', $nome_medico_area);
+        TTransaction::close();
     }
 }
