@@ -15,10 +15,6 @@ class CalendarEventForm extends TWindow
 {
     protected $form; // form
     
-    /**
-     * Class constructor
-     * Creates the page and the registration form
-     */
     public function __construct()
     {
         parent::__construct();
@@ -95,9 +91,6 @@ class CalendarEventForm extends TWindow
         parent::add($this->form);
     }
 
-    /**
-     * Executed when user leaves start hour field
-     */
     public static function onChangeStartHour($param=NULL)
     {
         $obj = new stdClass;
@@ -114,10 +107,7 @@ class CalendarEventForm extends TWindow
             TForm::sendData('form_event', $obj);
         }
     }
-    
-    /**
-     * Executed when user leaves end hour field
-     */
+
     public static function onChangeEndHour($param=NULL)
     {
         if (empty($param['end_minute']))
@@ -127,10 +117,7 @@ class CalendarEventForm extends TWindow
             TForm::sendData('form_event', $obj);
         }
     }
-    
-    /**
-     * Executed when user leaves start date field
-     */
+
     public static function onChangeStartDate($param=NULL)
     {
         if (empty($param['end_date']) AND !empty($param['start_date']))
@@ -140,10 +127,7 @@ class CalendarEventForm extends TWindow
             TForm::sendData('form_event', $obj);
         }
     }
-    
-    /**
-     * Executed when user leaves end date field
-     */
+
     public static function onChangeEndDate($param=NULL)
     {
         if (empty($param['end_hour']) AND empty($param['end_minute']) AND !empty($param['start_hour']))
@@ -155,10 +139,6 @@ class CalendarEventForm extends TWindow
         }
     }
     
-    /**
-     * method onSave()
-     * Executed whenever the user clicks at the save button
-     */
     public function onSave()
     {
         try
@@ -201,11 +181,7 @@ class CalendarEventForm extends TWindow
             TTransaction::rollback();
         }
     }
-    
-    /**
-     * method onEdit()
-     * Executed whenever the user clicks at the edit button da datagrid
-     */
+
     public function onEdit($param)
     {
         try
@@ -253,9 +229,6 @@ class CalendarEventForm extends TWindow
         }
     }
     
-    /**
-     * Delete event
-     */
     public static function onDelete($param)
     {
         // define the delete action
@@ -266,9 +239,6 @@ class CalendarEventForm extends TWindow
         new TQuestion(AdiantiCoreTranslator::translate('Do you really want to delete ?'), $action);
     }
     
-    /**
-     * Delete a record
-     */
     public static function Delete($param)
     {
         try
@@ -303,9 +273,6 @@ class CalendarEventForm extends TWindow
         }
     }
     
-    /**
-     * Fill form from the user selected time
-     */
     public function onStartEdit($param)
     {
         $this->form->clear();
@@ -333,9 +300,6 @@ class CalendarEventForm extends TWindow
         }
     }
     
-    /**
-     * Update event. Result of the drag and drop or resize.
-     */
     public static function onUpdateEvent($param)
     {
         try

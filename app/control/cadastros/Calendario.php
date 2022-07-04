@@ -12,10 +12,7 @@
 class Calendario extends TPage
 {
     private $fc;
-    
-    /**
-     * Page constructor
-     */
+    //page constructor
     public function __construct()
     {
         parent::__construct();
@@ -34,9 +31,6 @@ class Calendario extends TPage
         parent::add( $this->fc );
     }
     
-    /**
-     * Output events as an json
-     */
     public static function getEvents($param=NULL)
     {
         $return = array();
@@ -70,9 +64,6 @@ class Calendario extends TPage
         }
     }
     
-    /**
-     * Reconfigure the callendar
-     */
     public function onReload($param = null)
     {
         if (isset($param['view']))
