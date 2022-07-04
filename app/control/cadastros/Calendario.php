@@ -55,7 +55,7 @@ class Calendario extends TPage
                     $event_array['start'] = str_replace( ' ', 'T', $event_array['dtinicio']);
                     $event_array['end']   = str_replace( ' ', 'T', $event_array['dtfim']);
                     
-                    $popover_content = $event->render("<b>Título</b>: {titulo} <br> <b>Medico</b>: {medico_id} <br> <b>Paciente</b>: {paciente_id}");
+                    $popover_content = $event->render("<b>Título</b>: {titulo} <br> <b>Medico</b>: {nome_medico} <br> <b>Paciente</b>: {nome_paciente}");
                     $event_array['title'] = TFullCalendar::renderPopover($event_array['titulo'], 'Tipo de Evento', $popover_content);
                     
                     $return[] = $event_array;

@@ -25,4 +25,18 @@ class Vw_calendario extends TRecord
         parent::addAttribute('dtinicio');
         parent::addAttribute('dtfim');
     }
+
+    public function get_nome_medico()
+    {
+        if (empty($this->medico))
+            $this->medico = new Medico($this->medico_id);
+        return $this->medico->nome;
+    }
+
+    public function get_nome_paciente()
+    {
+        if (empty($this->paciente))
+            $this->paciente = new Paciente($this->paciente_id);
+        return $this->paciente->nome;
+    }
 }
