@@ -12,12 +12,15 @@ class GraficoColunas extends TPage
 
         TTransaction::open('sample');
         $conn = TTransaction::get();
+        
 
-        $sql1 = "SELECT medico_id AS medicos,
-                        COUNT(*) AS 'Num. de consultas'
-                        FROM consulta
-                        GROUP BY medico_id
-                        ORDER BY COUNT(*) DESC;";
+        $sql1 = "SELECT c.medico_id AS ID_MEDICO, 
+                        m.nome AS NOME_MEDICO, 
+                        COUNT(*) AS 'Num. de consultas' 
+                        FROM consulta c
+                        JOIN medico m ON m.id = c.medico_id
+                        GROUP BY c.medico_id, m.nome
+                        ORDER BY COUNT(*) ASC;";
 
         $pre = $conn->prepare($sql1); 
 
@@ -30,7 +33,7 @@ class GraficoColunas extends TPage
   
         foreach($colunas as $coluna)
         {
-            $data[] = ['Medico: '.$coluna[0],(float)$coluna[1]];
+            $data[] = [$coluna[1],(float)$coluna[2]];
         }
         
         
