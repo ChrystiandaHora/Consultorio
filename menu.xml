@@ -28,6 +28,10 @@
         <action>RelatorioConsulta</action>
         <icon>fas:book-medical fa-fw</icon>
       </menuitem>
+      <menuitem label="Grafico Consultas">
+        <action>GraficoColunas</action>
+        <icon>fas:chart-bar fa-fw</icon>
+      </menuitem>
     </menu>
   </menuitem>
   <menuitem label="Nota Fiscal">
