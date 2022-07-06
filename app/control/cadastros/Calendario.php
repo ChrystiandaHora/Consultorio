@@ -25,7 +25,7 @@ class Calendario extends TPage
         $this->fc->setOption('businessHours', [ [ 'dow' => [ 1, 2, 3, 4, 5 ], 'start' => '08:00', 'end' => '18:00' ]]);
         $this->fc->setOption('slotDuration', '00:20');
         $this->fc->setOption('slotLabelInterval', '00:20');
-        $this->fc->setTimeRange('08:00', '18:00');
+        $this->fc->setTimeRange('08:00', '18:20');
         // $this->fc->disableDragging();
         // $this->fc->disableResizing();
         parent::add( $this->fc );
