@@ -39,24 +39,24 @@ class CalendarEventForm extends TWindow
         }
         
         // create the form fields
-        $view           = new THidden('view');
-        $id             = new TEntry('id');
+        $view = new THidden('view');
+        $id = new TEntry('id');
         $area_do_medico_nome = new TDBCombo('area_do_medico_nome','permission','medico','id','area_do_medico');
         $action = new TAction([$this, 'mudaSelecao']);
         $area_do_medico_nome->setChangeAction($action);
-        $medico_id      = new TDBCombo('medico_id','permission','medico','id','nome');
-        $paciente_id    = new TDBCombo('paciente_id','permission','paciente','id','nome');
-        $start_date     = new TDate('start_date');
-        $start_date     ->setMask( "dd/mm/yyyy" );
-        $start_date     ->setDatabaseMask("yyyy-mm-dd");        
-        $start_hour     = new TCombo('start_hour');
-        $start_minute   = new TCombo('start_minute');
-        $end_date       = new TDate('end_date');
-        $end_date       ->setMask( "dd/mm/yyyy" );
-        $end_date       ->setDatabaseMask("yyyy-mm-dd");
-        $end_hour       = new TCombo('end_hour');
-        $end_minute     = new TCombo('end_minute');
-        $titulo         = new TCombo('titulo');
+        $medico_id = new TDBCombo('medico_id','permission','medico','id','nome');
+        $paciente_id = new TDBCombo('paciente_id','permission','paciente','id','nome');
+        $start_date = new TDate('start_date');
+        $start_date ->setMask( "dd/mm/yyyy" );
+        $start_date ->setDatabaseMask("yyyy-mm-dd");        
+        $start_hour  = new TCombo('start_hour');
+        $start_minute= new TCombo('start_minute');
+        $end_date = new TDate('end_date');
+        $end_date ->setMask( "dd/mm/yyyy" );
+        $end_date ->setDatabaseMask("yyyy-mm-dd");
+        $end_hour = new TCombo('end_hour');
+        $end_minute = new TCombo('end_minute');
+        $titulo = new TCombo('titulo');
         $titulo -> addItems(['Consulta - Primeira Vez'=>'Consulta - Primeira Vez com o Médico(a)','Consulta - Retorno'=>'Consulta - Retorno', 'Exame'=>'Realização de Exame']); 
         
         $start_hour->addItems($hours);
@@ -160,13 +160,13 @@ class CalendarEventForm extends TWindow
             $data = $this->form->getData();
             
             $object = new Vw_calendario;
-            $object->id                    = $data->id;
-            $object->titulo               = $data->titulo;
-            $object->medico_id            = $data->medico_id;
-            $object->paciente_id          = $data->paciente_id;
-            $object->area_do_medico_nome  = $data->area_do_medico_nome;
-            $object->dtinicio             = $data->start_date . ' ' . str_pad($data->start_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->start_minute, 2, '0', STR_PAD_LEFT) . ':00';
-            $object->dtfim                = $data->end_date . ' ' . str_pad($data->end_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->end_minute, 2, '0', STR_PAD_LEFT) . ':00';
+            $object->id = $data->id;
+            $object->titulo = $data->titulo;
+            $object->medico_id = $data->medico_id;
+            $object->paciente_id = $data->paciente_id;
+            $object->area_do_medico_nome = $data->area_do_medico_nome;
+            $object->dtinicio = $data->start_date . ' ' . str_pad($data->start_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->start_minute, 2, '0', STR_PAD_LEFT) . ':00';
+            $object->dtfim = $data->end_date . ' ' . str_pad($data->end_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($data->end_minute, 2, '0', STR_PAD_LEFT) . ':00';
             
             $object->store(); // stores the object
             
@@ -209,18 +209,18 @@ class CalendarEventForm extends TWindow
                 $object = new Vw_calendario($key);
                 
                 $data = new stdClass;
-                $data->id                   = $object->id;
-                $data->titulo               = $object->titulo;
-                $data->medico_id            = $object->medico_id;
-                $data->paciente_id          = $object->paciente_id;
+                $data->id = $object->id;
+                $data->titulo = $object->titulo;
+                $data->medico_id = $object->medico_id;
+                $data->paciente_id = $object->paciente_id;
                 $data->area_do_medico_nome  = $object->area_do_medico_nome;
-                $data->start_date           = substr($object->dtinicio,0,10);
-                $data->start_hour           = substr($object->dtinicio,11,2);
-                $data->start_minute         = substr($object->dtinicio,14,2);
-                $data->end_date             = substr($object->dtfim,0,10);
-                $data->end_hour             = substr($object->dtfim,11,2);
-                $data->end_minute           = substr($object->dtfim,14,2);
-                $data->view                 = $param['view'];
+                $data->start_date = substr($object->dtinicio,0,10);
+                $data->start_hour = substr($object->dtinicio,11,2);
+                $data->start_minute = substr($object->dtinicio,14,2);
+                $data->end_date = substr($object->dtfim,0,10);
+                $data->end_hour = substr($object->dtfim,11,2);
+                $data->end_minute = substr($object->dtfim,14,2);
+                $data->view = $param['view'];
                 
                 // fill the form with the active record data
                 $this->form->setData($data);
@@ -302,12 +302,12 @@ class CalendarEventForm extends TWindow
             }
             if (strlen($param['date']) == 19)
             {
-                $data->start_date   = substr($param['date'],0,10);
-                $data->start_hour   = substr($param['date'],11,2);
+                $data->start_date = substr($param['date'],0,10);
+                $data->start_hour = substr($param['date'],11,2);
                 $data->start_minute = substr($param['date'],14,2);
                 
-                $data->end_date   = substr($param['date'],0,10);
-                $data->end_hour   = substr($param['date'],11,2) +1;
+                $data->end_date = substr($param['date'],0,10);
+                $data->end_hour = substr($param['date'],11,2) +1;
                 $data->end_minute = substr($param['date'],14,2);
             }
             $this->form->setData( $data );
@@ -328,8 +328,8 @@ class CalendarEventForm extends TWindow
                 
                 // instantiates object CalendarEvent
                 $object = new Vw_calendario($key);
-                $object->dtinicio   = str_replace('T', ' ', $param['dtinicio']);
-                $object->dtinicio   = str_replace('T', ' ', $param['dtfim']);
+                $object->dtinicio = str_replace('T', ' ', $param['dtinicio']);
+                $object->dtinicio = str_replace('T', ' ', $param['dtfim']);
                 $object->store();
                                 
                 // close the transaction
