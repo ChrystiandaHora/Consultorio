@@ -55,12 +55,12 @@ class PacienteForm extends TStandardForm
 
         // add the fields
         $this->form->addFields( [new TLabel('ID')],[$id] );
-        $this->form->addFields( [new TLabel('Nome')], [$nome], [new TLabel('Sexo')], [$sexo] );
-        $this->form->addFields( [new TLabel('Idade')], [$idade], [new TLabel('Telefone')], [$telefone] );
-        $this->form->addFields( [new TLabel('CPF')], [$cpf], [new TLabel('Cidade')], [$cidade] );
-        $this->form->addFields( [new TLabel('Endereço')], [$endereco],[new TLabel('Número')], [$numero] );
-        $this->form->addFields( [new TLabel('Bairro')], [$bairro],[new TLabel('Complemento')], [$complemento] );
-        $this->form->addFields( [new TLabel('UF')], [$uf], [new TLabel('E-Mail')], [$email] );
+        $this->form->addFields( [new TLabel('Nome <font color="red">*</font>')], [$nome], [new TLabel('Sexo <font color="red">*</font>')], [$sexo] );
+        $this->form->addFields( [new TLabel('Idade <font color="red">*</font>')], [$idade], [new TLabel('Telefone <font color="red">*</font>')], [$telefone] );
+        $this->form->addFields( [new TLabel('CPF <font color="red">*</font>')], [$cpf], [new TLabel('Cidade <font color="red">*</font>')], [$cidade] );
+        $this->form->addFields( [new TLabel('Endereço <font color="red">*</font>')], [$endereco],[new TLabel('Número <font color="red">*</font>')], [$numero] );
+        $this->form->addFields( [new TLabel('Bairro <font color="red">*</font>')], [$bairro],[new TLabel('Complemento')], [$complemento] );
+        $this->form->addFields( [new TLabel('UF <font color="red">*</font>')], [$uf], [new TLabel('E-Mail <font color="red">*</font>')], [$email] );
         
         $id->setEditable(FALSE);
         $id->setSize('400');
@@ -93,7 +93,6 @@ class PacienteForm extends TStandardForm
         $uf->addValidation(('UF'), new TRequiredValidator );
 
         $complemento->setSize('400');
-        $complemento->addValidation(('Complemento'), new TRequiredValidator );
 
         $telefone->setSize('400');
         $telefone->addValidation(('Telefone'), new TRequiredValidator );

@@ -47,10 +47,10 @@ class MedicoForm extends TStandardForm
         $email->addValidation('email',new TEmailValidator);
 
         // add the fields
-        $this->form->addFields( [new TLabel('Id')], [$id],[new TLabel('Nome')], [$nome] );
-        $this->form->addFields( [new TLabel('Sexo')], [$sexo],[new TLabel('Idade')], [$idade]);
-        $this->form->addFields( [new TLabel('Telefone')], [$telefone],[new TLabel('CPF')], [$cpf]);
-        $this->form->addFields( [new TLabel('Area de Atuação')], [$area_do_medico] , [new TLabel('E-Mail')], [$email] );
+        $this->form->addFields( [new TLabel('Id')], [$id],[new TLabel('Nome <font color="red">*</font>')], [$nome] );
+        $this->form->addFields( [new TLabel('Sexo <font color="red">*</font>')], [$sexo],[new TLabel('Idade <font color="red">*</font>')], [$idade]);
+        $this->form->addFields( [new TLabel('Telefone <font color="red">*</font>')], [$telefone],[new TLabel('CPF <font color="red">*</font>')], [$cpf]);
+        $this->form->addFields( [new TLabel('Area de Atuação <font color="red">*</font>')], [$area_do_medico] , [new TLabel('E-Mail <font color="red">*</font>')], [$email] );
         
         $id->setEditable(FALSE);
         $id->setSize('400');
