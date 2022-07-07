@@ -31,6 +31,7 @@ class PaymentList extends TStandardList
         parent::addFilterField('id_paciente', '=', 'id_paciente'); // filterField, operator, formField
         parent::addFilterField('id_area_do_medico', '=', 'id_area_do_medico'); // filterField, operator, formField
         parent::addFilterField('payment', '=', 'payment');
+        parent::addFilterField('status', '=', 'status');
         parent::addFilterField('dtinicio', '>=', 'dtinicio');
         
         // creates the form
@@ -50,24 +51,26 @@ class PaymentList extends TStandardList
         $dtinicio = new  TDateTime ('dtinicio');
         $dtinicio->setMask('dd/mm/yyyy hh:ii');
         $dtinicio->setDatabaseMask('yyyy-mm-dd hh:ii');
+
+        $radio = new TRadioGroup('status');
+        $radio->setLayout('horizontal');
+        $radio->setUseButton();
+        $items = ['Aguardando Pagamento'=>'Aguardando Pagamento', 'Pago'=>'Pago'];
+        $radio->addItems($items);
+        $radio->setValue('');
        
         // add the fields
         $this->form->addFields( [new TLabel('Paciente')], [$paciente_nome] );
+        $this->form->addFields( [new TLabel('Status')], [$radio] );
         $this->form->addFields( [new TLabel('Área da Consulta')], [$id_area_do_medico] );
         $this->form->addFields( [new TLabel('Pagamento')], [$payment] );
         $this->form->addFields( [new TLabel('Data Inicio')], [$dtinicio] );
 
         $paciente_nome->setSize('50%');
-        $paciente_nome->addValidation(('Paciente'), new TRequiredValidator );
-
         $id_area_do_medico->setSize('50%');
-        $id_area_do_medico->addValidation(('Área da Consulta'), new TRequiredValidator );
-
         $payment->setSize('50%');
-        $payment->addValidation(('Pagamento'), new TRequiredValidator );
-
         $dtinicio->setSize('50%');
-        $dtinicio->addValidation(('Data Inicio'), new TRequiredValidator );
+        $radio->setSize('50%');
 
         // keep the form filled during navigation with session data
         $this->form->setData( TSession::getValue('Payment_filter_data') );
@@ -88,13 +91,14 @@ class PaymentList extends TStandardList
         $column_paciente = new TDataGridColumn('nome_paciente', ('Paciente'), 'left');
         $column_id_area_do_medico = new TDataGridColumn('area_medico', ('Área da Consulta'), 'left');
         $column_payment = new TDataGridColumn('payment', ('Pagamento'), 'left');
+        $column_status = new TDataGridColumn('status', ('Status'), 'left');
         $column_dtinicio = new TDataGridColumn('dtinicio', ('Data da Consulta'), 'left');
-
 
         // add the columns to the DataGrid
         $this->datagrid->addColumn($column_paciente);
         $this->datagrid->addColumn($column_id_area_do_medico);
         $this->datagrid->addColumn($column_payment);
+        $this->datagrid->addColumn($column_status);
         $this->datagrid->addColumn($column_dtinicio);
 
         // creates the datagrid column actions
@@ -109,6 +113,10 @@ class PaymentList extends TStandardList
         $order_payment = new TAction(array($this, 'onReload'));
         $order_payment->setParameter('order', 'payment');
         $column_payment->setAction($order_payment);
+
+        $order_status = new TAction(array($this, 'onReload'));
+        $order_status->setParameter('order', 'status');
+        $column_status->setAction($order_status);
 
         $order_dia_da_consulta = new TAction(array($this, 'onReload'));
         $order_dia_da_consulta->setParameter('order', 'dtinicio');

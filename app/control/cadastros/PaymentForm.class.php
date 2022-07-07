@@ -12,7 +12,6 @@
 class PaymentForm extends TStandardForm
 {
     protected $form; // form
-    private $id_medico_area;
     
     /**
      * Class constructor
@@ -38,19 +37,32 @@ class PaymentForm extends TStandardForm
         $action = new TAction([$this, 'mudaSelecao']);
         $paciente_nome->setChangeAction($action);
         
+        // $action1 = new TAction([$this, 'mudaSelecao2']);
+        // $paciente_nome->setChangeAction($action1);
+ 
         $area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id','area_medico');
+
         $payment = new TEntry('payment');
         $payment->setMask('999,99');
-
+        
         $dtinicio = new  TDateTime ('dtinicio');
         $dtinicio->setMask('dd/mm/yyyy hh:ii');
         $dtinicio->setDatabaseMask('yyyy-mm-dd hh:ii');
+
+        $radio = new TRadioGroup('status');
+        $radio->setLayout('horizontal');
+        $radio->setUseButton();
+        $items = ['Aguardando Pagamento'=>'Aguardando Pagamento', 'Pago'=>'Pago'];
+        $radio->addItems($items);
+        $radio->setValue('Aguardando Pagamento');
+
 
         // add the fields
         $this->form->addFields( [new TLabel('ID')], [$id] );
         $this->form->addFields( [new TLabel('Paciente')], [$paciente_nome] );
         $this->form->addFields( [new TLabel('Área da Consulta')], [$area_do_medico] );
         $this->form->addFields( [new TLabel('Pagamento')], [$payment] );
+        $this->form->addFields( [new TLabel('Status')],  [$radio] );
         $this->form->addFields( [new TLabel('Data Inicio')], [$dtinicio] );
 
         $id->setEditable(FALSE);
@@ -64,6 +76,8 @@ class PaymentForm extends TStandardForm
 
         $payment->setSize('50%');
         $payment->addValidation(('Pagamento'), new TRequiredValidator );
+
+        $radio->setSize('50%');
 
         $dtinicio->setSize('50%');
         $dtinicio->addValidation(('Data Inicio'), new TRequiredValidator );
@@ -87,7 +101,7 @@ class PaymentForm extends TStandardForm
     {
         TTransaction::open('sample');
         $conn = TTransaction::get();
-        //pegando o id da area do medico
+        //pegando o id da area da consulta
         $stmt = $conn->query('SELECT area_do_medico_nome FROM consulta WHERE id ='.$param["id_paciente"]);
         $data = $stmt->fetchAll();
         if($data)
@@ -96,7 +110,7 @@ class PaymentForm extends TStandardForm
             $id_medico_area = $row["area_do_medico_nome"];
             }
         }
-        //pegando o nome do medico baseado na sua id antes pega
+        //pegando o nome do medico baseado na sua id da area antes pega
         $stmt = $conn->query('SELECT nome FROM medico WHERE id ='.$id_medico_area);
         $data = $stmt->fetchAll();
         if($data)
@@ -109,4 +123,31 @@ class PaymentForm extends TStandardForm
         TCombo::reload('form_PaymentForm', 'id_area_do_medico', $nome_medico_area);
         TTransaction::close();
     }
+
+    // static function mudaSelecao2($param)
+    // {
+    //     TTransaction::open('sample');
+    //     $conn = TTransaction::get();
+    //     //pegando o paciente da consulta
+    //     $stmt = $conn->query('SELECT dtinicio FROM consulta WHERE id ='.$param["dtinicio"]);
+    //     $data = $stmt->fetchAll();
+    //     if($data)
+    //     {
+    //     foreach ($data as $row) {
+    //         $id_consulta = $row["dtinicio"];
+    //         }
+    //     }
+    //     //pegando a hora baseado no paciente da consulta
+    //     $stmt = $conn->query('SELECT paciente_id FROM consulta WHERE id ='.$id_consulta);
+    //     $data = $stmt->fetchAll();
+    //     if($data)
+    //     {
+    //     foreach ($data as $row) {
+    //         $hora =[$id_consulta => $row["dtinicio"]];
+    //         }
+    //     }
+    //     //imprimindo o TCombo
+    //     TCombo::reload('form_PaymentForm', 'dtnicio', $hora);
+    //     TTransaction::close();
+    // }
 }

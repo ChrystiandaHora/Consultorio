@@ -29,6 +29,7 @@ class nota_fiscal extends TRecord
         parent::addAttribute('id_paciente');
         parent::addAttribute('id_area_do_medico');
         parent::addAttribute('payment');
+        parent::addAttribute('status');
         parent::addAttribute('dtinicio');
     }
 
