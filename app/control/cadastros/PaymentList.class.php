@@ -55,7 +55,7 @@ class PaymentList extends TStandardList
         $radio = new TRadioGroup('status');
         $radio->setLayout('horizontal');
         $radio->setUseButton();
-        $items = ['Aguardando Pagamento'=>'Aguardando Pagamento', 'Pago'=>'Pago'];
+        $items = ['Aguardando Pagamento'=>'Aguardando Pagamento', 'Pago'=>'Pago','Próximo do vencimento'=>'Próximo do vencimento','Atrasado'=>'Atrasado'];      
         $radio->addItems($items);
         $radio->setValue('');
        
@@ -120,13 +120,21 @@ class PaymentList extends TStandardList
 
         $column_status->setTransformer(function($value, $object, $row) {
             switch($value){
-                case 'Pago':
-                $class = 'success';
-                $label = 'Pago';
-                break;
                 case 'Aguardando Pagamento':
-                $class = 'warning';
-                $label = 'Aguardando Pagamento';
+                    $class = 'info';
+                   $label = 'Aguardando Pagamento';
+                break;
+                case 'Pago':
+                    $class = 'success';
+                    $label = 'Pago';
+                break;
+                case 'Próximo do vencimento':
+                    $class = 'warning';
+                    $label = 'Próximo do vencimento';
+                    break;
+                case 'Atrasado':
+                    $class = 'danger';
+                    $label = 'Atrasado';
                 break;
             }
             $div = new TElement('span');

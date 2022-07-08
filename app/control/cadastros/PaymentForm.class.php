@@ -52,7 +52,7 @@ class PaymentForm extends TStandardForm
         $radio = new TRadioGroup('status');
         $radio->setLayout('horizontal');
         $radio->setUseButton();
-        $items = ['Aguardando Pagamento'=>'Aguardando Pagamento', 'Pago'=>'Pago'];
+        $items = ['Aguardando Pagamento'=>'Aguardando Pagamento', 'Pago'=>'Pago','Próximo do vencimento'=>'Próximo do vencimento','Atrasado'=>'Atrasado'];
         $radio->addItems($items);
         $radio->setValue('Aguardando Pagamento');
 
