@@ -39,12 +39,13 @@ class PaymentList extends TStandardList
         $this->form->setFormTitle('Nota Fiscal');
         
         // create the form fields
-        $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id','nome_paciente');
+        $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id_paciente','nome_paciente');
         
         $action = new TAction([$this, 'mudaSelecao']);
         $paciente_nome->setChangeAction($action);
         
-        $id_area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id','area_medico');
+
+        $id_area_do_medico = new TDBCombo('id_area_do_medico','permission','medico','id','area_do_medico');
         $payment = new TEntry('pagamento');
         $payment->setMask('999,99');
 
@@ -189,29 +190,40 @@ class PaymentList extends TStandardList
     }
     public static function mudaSelecao($param)
     {
-        TTransaction::open('sample');
-        $conn = TTransaction::get();
-        //pegando o id da area do medico
-        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id ='.$param["id_paciente"]);
-        $data = $stmt->fetchAll();
-        if($data)
-        {
-        foreach ($data as $row) {
-            $id_medico_area = $row["id_area_do_medico"];
+        
+        try{
+            TTransaction::open('sample');
+            //$conn = TTransaction::get();
+            //pegando o id da area do medico
+            // $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id ='.$param["id_paciente"]);
+            // $data = $stmt->fetchAll();
+           
+            $repo = new TRepository('Nota_Fiscal');
+            $criteria = new TCriteria;
+            $criteria->add(new TFilter('id_paciente', '=',  $param["id_paciente"])); 
+            $data = $repo->load($criteria); 
+            if($data)
+            {
+                foreach ($data as $row) {
+                    $id_medico_area = $row["id_area_do_medico"];
+                }
             }
-        }
-        //pegando o nome do medico baseado na sua id antes pega
-        $stmt = $conn->query('SELECT nome FROM medico WHERE id ='.$id_medico_area);
-        $data = $stmt->fetchAll();
-        if($data)
-        {
-        foreach ($data as $row) {
-            $nome_medico_area =[$id_medico_area => $row["nome"]];
+            //pegando o nome do medico baseado na sua id antes pega
+            $stmt = $conn->query('SELECT nome FROM medico WHERE id IN('.$id_medico_area.')');
+            $data = $stmt->fetchAll();
+            if($data)
+            {
+            foreach ($data as $row) {
+                $nome_medico_area =[$id_medico_area => $row["nome"]];
+                }
             }
+            //imprimindo o TCombo
+            TCombo::reload('form_search_Pagamento', 'id_area_do_medico', $nome_medico_area);
+            TTransaction::close();
+
+        }catch(Exception $e){
+            new TMessage('error', $e->getMessage());
         }
-        //imprimindo o TCombo
-        TCombo::reload('form_search_Pagamento', 'id_area_do_medico', $nome_medico_area);
-        TTransaction::close();
     }
     public function onClear()
     {

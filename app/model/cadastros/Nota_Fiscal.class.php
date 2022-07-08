@@ -40,7 +40,7 @@ class nota_fiscal extends TRecord
         return $this->paciente->nome;
     }
     
-    public function get_area_medico()
+    public function get_nome_area_medico()
     {
         if (empty($this->medico))
             $this->medico = new Medico($this->id_area_do_medico);

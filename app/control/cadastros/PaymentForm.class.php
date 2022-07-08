@@ -32,22 +32,23 @@ class PaymentForm extends TStandardForm
         
         // create the form fields
         $id = new TEntry('id');
-        $paciente_nome = new TDBCombo('id_paciente','permission','consulta','id','nome_paciente');
+        $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id_paciente','nome_paciente');
         
         $action = new TAction([$this, 'mudaSelecao']);
         $paciente_nome->setChangeAction($action);
-        
-        // $action1 = new TAction([$this, 'mudaSelecao2']);
-        // $paciente_nome->setChangeAction($action1);
  
-        $area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id','area_medico');
+        $area_do_medico = new TDBCombo('id_area_do_medico','permission','medico','id','area_do_medico');
 
         $payment = new TEntry('payment');
         $payment->setMask('999,99');
         
-        $dtinicio = new  TDateTime ('dtinicio');
-        $dtinicio->setMask('dd/mm/yyyy hh:ii');
-        $dtinicio->setDatabaseMask('yyyy-mm-dd hh:ii');
+        $dtinicio = new  TDateTime ('dtinicio', 'permission','consulta','id','dtinicio');
+        // $dtinicio = new  TDBCombo ('dtinicio', 'permission','consulta','id','dtinicio');
+        // $dtinicio = strtotime($dtinicio);
+
+
+        // $dtinicio->setMask('dd/mm/yyyy hh:ii');
+        // $dtinicio->setDatabaseMask('yyyy-mm-dd hh:ii');
 
         $radio = new TRadioGroup('status');
         $radio->setLayout('horizontal');
@@ -123,31 +124,4 @@ class PaymentForm extends TStandardForm
         TCombo::reload('form_PaymentForm', 'id_area_do_medico', $nome_medico_area);
         TTransaction::close();
     }
-
-    // static function mudaSelecao2($param)
-    // {
-    //     TTransaction::open('sample');
-    //     $conn = TTransaction::get();
-    //     //pegando o paciente da consulta
-    //     $stmt = $conn->query('SELECT dtinicio FROM consulta WHERE id ='.$param["dtinicio"]);
-    //     $data = $stmt->fetchAll();
-    //     if($data)
-    //     {
-    //     foreach ($data as $row) {
-    //         $id_consulta = $row["dtinicio"];
-    //         }
-    //     }
-    //     //pegando a hora baseado no paciente da consulta
-    //     $stmt = $conn->query('SELECT paciente_id FROM consulta WHERE id ='.$id_consulta);
-    //     $data = $stmt->fetchAll();
-    //     if($data)
-    //     {
-    //     foreach ($data as $row) {
-    //         $hora =[$id_consulta => $row["dtinicio"]];
-    //         }
-    //     }
-    //     //imprimindo o TCombo
-    //     TCombo::reload('form_PaymentForm', 'dtnicio', $hora);
-    //     TTransaction::close();
-    // }
 }
