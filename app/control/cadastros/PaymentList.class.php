@@ -90,9 +90,9 @@ class PaymentList extends TStandardList
         // creates the datagrid columns
         $column_paciente = new TDataGridColumn('nome_paciente', ('Paciente'), 'left');
         $column_id_area_do_medico = new TDataGridColumn('area_medico', ('Área da Consulta'), 'left');
-        $column_payment = new TDataGridColumn('payment', ('Pagamento'), 'left');
-        $column_status = new TDataGridColumn('status', ('Status'), 'left');
-        $column_dtinicio = new TDataGridColumn('dtinicio', ('Data da Consulta'), 'left');
+        $column_payment = new TDataGridColumn('payment', ('Pagamento'), 'center');
+        $column_status = new TDataGridColumn('status', ('Status'), 'center');
+        $column_dtinicio = new TDataGridColumn('dtinicio', ('Data da Consulta'), 'center');
 
         // add the columns to the DataGrid
         $this->datagrid->addColumn($column_paciente);
@@ -117,6 +117,24 @@ class PaymentList extends TStandardList
         $order_status = new TAction(array($this, 'onReload'));
         $order_status->setParameter('order', 'status');
         $column_status->setAction($order_status);
+
+        $column_status->setTransformer(function($value, $object, $row) {
+            switch($value){
+                case 'Pago':
+                $class = 'success';
+                $label = 'Pago';
+                break;
+                case 'Aguardando Pagamento':
+                $class = 'warning';
+                $label = 'Aguardando Pagamento';
+                break;
+            }
+            $div = new TElement('span');
+            $div->class ="label label-{$class}";
+            $div->style="text-shadow:nome; font-size:12px; font-weight:lighter";
+            $div->add($label);
+            return $div;
+        });
 
         $order_dia_da_consulta = new TAction(array($this, 'onReload'));
         $order_dia_da_consulta->setParameter('order', 'dtinicio');
