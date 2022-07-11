@@ -18,12 +18,12 @@ class RelatorioNotaFiscal extends TPage
       parent::__construct();
 
       $this->form = new BootstrapFormBuilder();
-      $this->form->setFormTitle('Relatorio de Notas Fiscais');
+      $this->form->setFormTitle('Relatório de Notas Fiscais');
         
       // create the form fields
       $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id_paciente','nome_paciente');
       $id_area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id_area_do_medico','nome_area_medico');
-      $payment = new TEntry('pagamento');
+      $payment = new TEntry('payment');
       $dtinicio = new  TDateTime ('dtinicio');
       $dtinicio->setMask('dd/mm/yyyy hh:ii');
       $dtinicio->setDatabaseMask('yyyy-mm-dd hh:ii');

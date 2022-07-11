@@ -92,7 +92,7 @@ class MedicoList extends TStandardList
         $column_sexo = new TDataGridColumn('sexo', ('Sexo'), 'left');
         $column_idade = new TDataGridColumn('idade', ('Idade'), 'left');
         $column_cpf = new TDataGridColumn('cpf', ('CPF'), 'left');
-        $column_area_do_medico = new TDataGridColumn('area_do_medico', ('Area de Atuacao'), 'left');
+        $column_area_do_medico = new TDataGridColumn('area_do_medico', ('Área de Atuação'), 'left');
         $column_telefone = new TDataGridColumn('telefone', ('Telefone'), 'left');
         $column_email = new TDataGridColumn('email', ('E-Mail'), 'left');
 
