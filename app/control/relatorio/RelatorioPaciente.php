@@ -146,7 +146,7 @@ class RelatorioPaciente extends TPage
       
         if($paciente)
         {
-          $widths=[220, 45, 40, 110, 210, 135, 40, 135, 45, 220, 135, 210, 0];
+          $widths=[220, 45, 40, 110, 210, 135, 40, 135, 45, 220, 135, 210];
           //nome, sexo, idade, cpf, endereco, cidade, numero, bairro, uf, complemento, telefone, email, ESSE ULTIMO ZERO É DE ALGUMA PARADA PARA NAO QUEBRAR E APARECER ERRO ESTÁ DENTRO DA PADRONIZAÇÃO.
           switch($data->output)
           {
@@ -170,7 +170,7 @@ class RelatorioPaciente extends TPage
           }
           $table -> setHeaderCallback(function($table){
             $table -> addRow();
-            $table -> addCell('Pacientes','center','header',13);
+            $table -> addCell('Pacientes','center','header',12);
 
             $table -> addRow();
             $table -> addCell('Nome','center','title');
@@ -189,7 +189,7 @@ class RelatorioPaciente extends TPage
 
           $table->setFooterCallback(function($table){
             $table -> addRow();
-            $table -> addCell(date('Y-m-d H:i:s'),'center','footer',13);
+            $table -> addCell(date('Y-m-d H:i:s'),'center','footer',12);
 
           });
 

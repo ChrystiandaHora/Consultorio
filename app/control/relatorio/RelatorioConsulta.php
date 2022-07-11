@@ -91,7 +91,7 @@ class RelatorioConsulta extends TPage
       
         if($consulta)
         {
-          $widths=[220, 220, 150, 220, 220, 220,80,0,0,0,0,0,0];
+          $widths=[220, 220, 150, 220, 220, 220,80];
           //paciente_id, medico_id, dtinicio, area_do_medico_nome,ESSE ULTIMO ZERO É DE ALGUMA PARADA PARA NAO QUEBRAR E APARECER ERRO ESTÁ DENTRO DA PADRONIZAÇÃO.
           switch($data->output)
           {
@@ -115,7 +115,7 @@ class RelatorioConsulta extends TPage
           }
           $table -> setHeaderCallback(function($table){
             $table -> addRow();
-            $table -> addCell('Relatório das Consultas','center','header',13);
+            $table -> addCell('Relatório das Consultas','center','header',7);
 
             $table -> addRow();
             $table -> addCell('Paciente','center','title');
@@ -128,7 +128,7 @@ class RelatorioConsulta extends TPage
 
           $table->setFooterCallback(function($table){
             $table -> addRow();
-            $table -> addCell(date('Y-m-d H:i:s'),'center','footer',13);
+            $table -> addCell(date('Y-m-d H:i:s'),'center','footer',7);
 
           });
 

@@ -34,25 +34,25 @@ class RelatorioNotaFiscal extends TPage
       $radio->addItems($items);
       $radio->setValue('');
       $output = new TRadioGroup('output');
-      $output-> setUseButton();
-      $output->addItems(['html'=> 'HTML','pdf'=>'PDF','xls'=>'XLS']);
-      $output->setValue('html');
-      $output->setLayout('horizontal');
-
+      
       $this->form->addFields( [new TLabel('Paciente')], [$paciente_nome] );
       $this->form->addFields( [new TLabel('Status')], [$radio] );
       $this->form->addFields( [new TLabel('Área da Consulta')], [$id_area_do_medico] );
       $this->form->addFields( [new TLabel('Valor da Consulta')], [$payment] );
       $this->form->addFields( [new TLabel('Data Inicio')], [$dtinicio] );
       $this->form->addFields( [new TLabel('Formato')], [$output] );  
-
-
+      
+      
       $paciente_nome->setSize('50%');
       $id_area_do_medico->setSize('50%');
       $payment->setSize('50%');
       $dtinicio->setSize('50%');
       $radio->setSize('50%');
-
+      $output-> setUseButton();
+      $output->addItems(['html'=> 'HTML','pdf'=>'PDF','xls'=>'XLS']);
+      $output->setValue('html');
+      $output->setLayout('horizontal');
+      
 
       $this->form->addAction('Gerar', new TAction([$this, 'onGenerate']),'fa:download blue');
 
@@ -81,22 +81,21 @@ class RelatorioNotaFiscal extends TPage
         {
           $criteria->add(new TFilter('payment','=',$data->payment));
         }
-
+        
         if($data->status)
         {
           $criteria->add(new TFilter('status','=',$data->status));
         }
-
+        
         if($data->dtinicio)
         {
           $criteria->add(new TFilter('dtinicio','=',$data->dtinicio));
         }
-
-        $consulta = $repository-> load($criteria);
-      
-        if($consulta)
+        
+        $nota_fiscal = $repository-> load($criteria);
+        if($nota_fiscal)
         {
-          $widths=[220, 220, 150, 220, 220,0,0,0,0,0,0,0,0];
+          $widths=[220, 220, 150, 220, 220];
           //id_paciente, id_area_do_medico, payment, status,dtinicio,ESSE ULTIMO ZERO É DE ALGUMA PARADA PARA NAO QUEBRAR E APARECER ERRO ESTÁ DENTRO DA PADRONIZAÇÃO.
           switch($data->output)
           {
@@ -120,7 +119,7 @@ class RelatorioNotaFiscal extends TPage
           }
           $table -> setHeaderCallback(function($table){
             $table -> addRow();
-            $table -> addCell('Relatório de Notas Fiscais','center','header',13);
+            $table -> addCell('Relatório de Notas Fiscais','center','header',5);
 
             $table -> addRow();
             $table -> addCell('Paciente','center','title');
@@ -132,7 +131,7 @@ class RelatorioNotaFiscal extends TPage
 
           $table->setFooterCallback(function($table){
             $table -> addRow();
-            $table -> addCell(date('Y-m-d H:i:s'),'center','footer',13);
+            $table -> addCell(date('Y-m-d H:i:s'),'center','footer',5);
 
           });
 
