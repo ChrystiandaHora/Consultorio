@@ -91,7 +91,7 @@ class RelatorioConsulta extends TPage
       
         if($consulta)
         {
-          $widths=[220, 220, 150, 220, 220, 220,80];
+          $widths=[260, 190, 260, 220, 220, 220,80];
           //paciente_id, medico_id, dtinicio, area_do_medico_nome,ESSE ULTIMO ZERO É DE ALGUMA PARADA PARA NAO QUEBRAR E APARECER ERRO ESTÁ DENTRO DA PADRONIZAÇÃO.
           switch($data->output)
           {
@@ -108,10 +108,10 @@ class RelatorioConsulta extends TPage
           if(!empty($table))
           {
             $table -> addStyle('header','Helvetica','16','B','#000','#40cfff');
-            $table -> addStyle('title','Helvetica','10','B','#000','#ffffff');
-            $table -> addStyle('datap','Helvetica','10','','#000','#ffffff','LR');
-            $table -> addStyle('datai','Helvetica','10','','#000','#C0C0C0','LR');
-            $table -> addStyle('footer','Helvetica','10','','#000','#40cfff');
+            $table -> addStyle('title','Helvetica','12','B','#000','#ffffff');
+            $table -> addStyle('datap','Helvetica','12','','#000','#ffffff','LR');
+            $table -> addStyle('datai','Helvetica','12','','#000','#C0C0C0','LR');
+            $table -> addStyle('footer','Helvetica','12','','#000','#40cfff');
           }
           $table -> setHeaderCallback(function($table){
             $table -> addRow();
@@ -138,9 +138,9 @@ class RelatorioConsulta extends TPage
           {
             $style = $colour ? 'datap': 'datai';
             $table->addRow();
-            $table->addCell($consulta->paciente_id,'center',$style);
+            $table->addCell($consulta->nome_paciente,'center',$style);
             $table->addCell($consulta->area_do_medico_nome,'center',$style);
-            $table->addCell($consulta->medico_id,'center',$style);
+            $table->addCell($consulta->nome_medico,'center',$style);
             $table->addCell($consulta->titulo,'center',$style);
             $table->addCell($consulta->dtinicio,'center',$style);
             $table->addCell($consulta->dtfim,'center',$style);

@@ -146,7 +146,7 @@ class RelatorioPaciente extends TPage
       
         if($paciente)
         {
-          $widths=[220, 45, 40, 110, 210, 135, 40, 135, 45, 220, 135, 210];
+          $widths=[220, 45, 50, 170, 210, 135, 40, 135, 45, 220, 140, 210];
           //nome, sexo, idade, cpf, endereco, cidade, numero, bairro, uf, complemento, telefone, email, ESSE ULTIMO ZERO É DE ALGUMA PARADA PARA NAO QUEBRAR E APARECER ERRO ESTÁ DENTRO DA PADRONIZAÇÃO.
           switch($data->output)
           {
@@ -163,10 +163,10 @@ class RelatorioPaciente extends TPage
           if(!empty($table))
           {
             $table -> addStyle('header','Helvetica','16','B','#000','#40cfff');
-            $table -> addStyle('title','Helvetica','10','B','#000','#ffffff');
-            $table -> addStyle('datap','Helvetica','10','','#000','#ffffff','LR');
-            $table -> addStyle('datai','Helvetica','10','','#000','#C0C0C0','LR');
-            $table -> addStyle('footer','Helvetica','10','','#000','#40cfff');
+            $table -> addStyle('title','Helvetica','12','B','#000','#ffffff');
+            $table -> addStyle('datap','Helvetica','12','','#000','#ffffff','LR');
+            $table -> addStyle('datai','Helvetica','12','','#000','#C0C0C0','LR');
+            $table -> addStyle('footer','Helvetica','12','','#000','#40cfff');
           }
           $table -> setHeaderCallback(function($table){
             $table -> addRow();

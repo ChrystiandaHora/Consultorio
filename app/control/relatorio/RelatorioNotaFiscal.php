@@ -112,10 +112,10 @@ class RelatorioNotaFiscal extends TPage
           if(!empty($table))
           {
             $table -> addStyle('header','Helvetica','16','B','#000','#40cfff');
-            $table -> addStyle('title','Helvetica','10','B','#000','#ffffff');
-            $table -> addStyle('datap','Helvetica','10','','#000','#ffffff','LR');
-            $table -> addStyle('datai','Helvetica','10','','#000','#C0C0C0','LR');
-            $table -> addStyle('footer','Helvetica','10','','#000','#40cfff');
+            $table -> addStyle('title','Helvetica','12','B','#000','#ffffff');
+            $table -> addStyle('datap','Helvetica','12','','#000','#ffffff','LR');
+            $table -> addStyle('datai','Helvetica','12','','#000','#C0C0C0','LR');
+            $table -> addStyle('footer','Helvetica','12','','#000','#40cfff');
           }
           $table -> setHeaderCallback(function($table){
             $table -> addRow();
@@ -141,8 +141,8 @@ class RelatorioNotaFiscal extends TPage
           {
             $style = $colour ? 'datap': 'datai';
             $table->addRow();
-            $table->addCell($nota_fiscal->id_paciente,'center',$style);
-            $table->addCell($nota_fiscal->id_area_do_medico,'center',$style);
+            $table->addCell($nota_fiscal->nome_paciente,'center',$style);
+            $table->addCell($nota_fiscal->nome_area_medico,'center',$style);
             $table->addCell($nota_fiscal->payment,'center',$style);
             $table->addCell($nota_fiscal->status,'center',$style);
             $table->addCell($nota_fiscal->dtinicio,'center',$style);
