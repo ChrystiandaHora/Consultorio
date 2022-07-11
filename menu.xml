@@ -12,7 +12,7 @@
         <icon>fas:briefcase-medical fa-fw</icon>
       </menuitem>
       <menuitem label="Relatório Paciente">
-        <action>RelatorioForm</action>
+        <action>RelatorioPaciente</action>
         <icon>fas:book fa-fw</icon>
       </menuitem>
     </menu>
@@ -35,8 +35,17 @@
     </menu>
   </menuitem>
   <menuitem label="Nota Fiscal">
-    <action>PaymentList</action>
     <icon>fas:barcode fa-fw</icon>
+    <menu>
+      <menuitem label="Nota Fiscal">
+        <action>PaymentList</action>
+        <icon>fas:barcode fa-fw</icon>
+      </menuitem>
+      <menuitem label="Relatório de Notas Fiscais">
+        <action>RelatorioNotaFiscal</action>
+        <icon>fas:address-book fa-fw</icon>
+      </menuitem>
+    </menu>
   </menuitem>
   <menuitem label="Calendario de Consulta">
     <action>Calendario</action>

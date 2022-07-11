@@ -9,7 +9,7 @@
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
  * @license    http://www.adianti.com.br/framework-license
  */
-class RelatorioForm extends TPage
+class RelatorioPaciente extends TPage
 {
     private $form;
     

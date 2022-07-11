@@ -1,6 +1,6 @@
 <?php
 /**
- * RelatórioConsulta
+ * RelatorioNotaFiscal
  *
  * @version    1.0
  * @package    model
@@ -9,7 +9,7 @@
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
  * @license    http://www.adianti.com.br/framework-license
  */
-class RelatorioConsulta extends TPage
+class RelatorioNotaFiscal extends TPage
 {
     private $form;
     
@@ -18,36 +18,41 @@ class RelatorioConsulta extends TPage
       parent::__construct();
 
       $this->form = new BootstrapFormBuilder();
-      $this->form->setFormTitle('Relatorio das Consultas');
+      $this->form->setFormTitle('Relatorio de Notas Fiscais');
         
       // create the form fields
-      $area_do_medico_nome = new TDBCombo('area_do_medico_nome','permission','medico','id','area_do_medico');      
-      $paciente_id = new TDBCombo('paciente_id','permission','paciente','id','nome');
-      $titulo = new TCombo('titulo');
-      $titulo -> addItems(['Consulta - Primeira Vez'=>'Consulta - Primeira Vez com o Médico(a)','Consulta - Retorno'=>'Consulta - Retorno', 'Exame'=>'Realização de Exame']);        
-      $medico_id = new TDBCombo('medico_id','permission','medico','id','nome');
+      $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id_paciente','nome_paciente');
+      $id_area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id_area_do_medico','nome_area_medico');
+      $payment = new TEntry('pagamento');
       $dtinicio = new  TDateTime ('dtinicio');
-      $dtfim = new  TDateTime ('dtfim');
+      $dtinicio->setMask('dd/mm/yyyy hh:ii');
+      $dtinicio->setDatabaseMask('yyyy-mm-dd hh:ii');
+      $radio = new TRadioGroup('status');
+      $radio->setLayout('horizontal');
+      $radio->setUseButton();
+      $items = ['Aguardando Pagamento'=>'Aguardando Pagamento', 'Pago'=>'Pago','Próximo do vencimento'=>'Próximo do vencimento','Atrasado'=>'Atrasado'];      
+      $radio->addItems($items);
+      $radio->setValue('');
       $output = new TRadioGroup('output');
-
-      $this->form->addFields( [new TLabel('Título')], [$titulo] ,[new TLabel('Paciente')], [$paciente_id]);
-      $this->form->addFields( [new TLabel('Médico')], [$medico_id], [new TLabel('Área da Consulta')], [$area_do_medico_nome]);
-      $this->form->addFields([new TLabel('Data Início da Consulta')], [$dtinicio] , [new TLabel('Data Fim da Consulta')],[$dtfim]);
-      $this->form->addFields( [new TLabel('Formato')], [$output] );  
-
-      
-      $area_do_medico_nome->setSize('400');
-      $paciente_id->setSize('400');
-      $titulo->setSize('80%');
-      $medico_id->setSize('400');
-      $dtinicio->setSize('400');
-      $dtfim->setSize('80%');
-
       $output-> setUseButton();
-      
       $output->addItems(['html'=> 'HTML','pdf'=>'PDF','xls'=>'XLS']);
       $output->setValue('html');
       $output->setLayout('horizontal');
+
+      $this->form->addFields( [new TLabel('Paciente')], [$paciente_nome] );
+      $this->form->addFields( [new TLabel('Status')], [$radio] );
+      $this->form->addFields( [new TLabel('Área da Consulta')], [$id_area_do_medico] );
+      $this->form->addFields( [new TLabel('Valor da Consulta')], [$payment] );
+      $this->form->addFields( [new TLabel('Data Inicio')], [$dtinicio] );
+      $this->form->addFields( [new TLabel('Formato')], [$output] );  
+
+
+      $paciente_nome->setSize('50%');
+      $id_area_do_medico->setSize('50%');
+      $payment->setSize('50%');
+      $dtinicio->setSize('50%');
+      $radio->setSize('50%');
+
 
       $this->form->addAction('Gerar', new TAction([$this, 'onGenerate']),'fa:download blue');
 
@@ -59,22 +64,27 @@ class RelatorioConsulta extends TPage
       {
         TTransaction::open('sample');
         $data = $this -> form-> getData();
-        $repository = new TRepository('Consulta');
+        $repository = new TRepository('Nota_Fiscal');
         $criteria = new TCriteria;
 
-        if($data->area_do_medico_nome)
+        if($data->id_paciente)
         {
-          $criteria->add(new TFilter('area_do_medico_nome','=',$data->area_do_medico_nome));
+          $criteria->add(new TFilter('id_paciente','=',$data->id_paciente));
         }
         
-        if($data->paciente_id)
+        if($data->id_area_do_medico)
         {
-          $criteria->add(new TFilter('paciente_id','=',$data->paciente_id));
+          $criteria->add(new TFilter('id_area_do_medico','=',$data->id_area_do_medico));
         }
 
-        if($data->medico_id)
+        if($data->payment)
         {
-          $criteria->add(new TFilter('medico_id','=',$data->medico_id));
+          $criteria->add(new TFilter('payment','=',$data->payment));
+        }
+
+        if($data->status)
+        {
+          $criteria->add(new TFilter('status','=',$data->status));
         }
 
         if($data->dtinicio)
@@ -82,17 +92,12 @@ class RelatorioConsulta extends TPage
           $criteria->add(new TFilter('dtinicio','=',$data->dtinicio));
         }
 
-        if($data->titulo)
-        {
-          $criteria->add(new TFilter('titulo','=',$data->titulo));
-        }
-
         $consulta = $repository-> load($criteria);
       
         if($consulta)
         {
-          $widths=[220, 220, 150, 220, 220, 220,80,0,0,0,0,0,0];
-          //paciente_id, medico_id, dtinicio, area_do_medico_nome,ESSE ULTIMO ZERO É DE ALGUMA PARADA PARA NAO QUEBRAR E APARECER ERRO ESTÁ DENTRO DA PADRONIZAÇÃO.
+          $widths=[220, 220, 150, 220, 220,0,0,0,0,0,0,0,0];
+          //id_paciente, id_area_do_medico, payment, status,dtinicio,ESSE ULTIMO ZERO É DE ALGUMA PARADA PARA NAO QUEBRAR E APARECER ERRO ESTÁ DENTRO DA PADRONIZAÇÃO.
           switch($data->output)
           {
             case 'html':
@@ -115,15 +120,14 @@ class RelatorioConsulta extends TPage
           }
           $table -> setHeaderCallback(function($table){
             $table -> addRow();
-            $table -> addCell('Relatório das Consultas','center','header',13);
+            $table -> addCell('Relatório de Notas Fiscais','center','header',13);
 
             $table -> addRow();
             $table -> addCell('Paciente','center','title');
             $table -> addCell('Área da Consulta','center','title');
-            $table -> addCell('Medico','center','title');
-            $table -> addCell('Título','center','title');
-            $table -> addCell('Data Início da Consulta','center','title');
-            $table -> addCell('Data Fim da Consulta','center','title');
+            $table -> addCell('Valor','center','title');
+            $table -> addCell('Status','center','title');
+            $table -> addCell('Data da Consulta','center','title');
           });
 
           $table->setFooterCallback(function($table){
@@ -134,16 +138,15 @@ class RelatorioConsulta extends TPage
 
 
           $colour = false;
-          foreach($consulta as $consulta)
+          foreach($nota_fiscal as $nota_fiscal)
           {
             $style = $colour ? 'datap': 'datai';
             $table->addRow();
-            $table->addCell($consulta->paciente_id,'center',$style);
-            $table->addCell($consulta->area_do_medico_nome,'center',$style);
-            $table->addCell($consulta->medico_id,'center',$style);
-            $table->addCell($consulta->titulo,'center',$style);
-            $table->addCell($consulta->dtinicio,'center',$style);
-            $table->addCell($consulta->dtfim,'center',$style);
+            $table->addCell($nota_fiscal->id_paciente,'center',$style);
+            $table->addCell($nota_fiscal->id_area_do_medico,'center',$style);
+            $table->addCell($nota_fiscal->payment,'center',$style);
+            $table->addCell($nota_fiscal->status,'center',$style);
+            $table->addCell($nota_fiscal->dtinicio,'center',$style);
             $colour=!$colour;
           }
 
