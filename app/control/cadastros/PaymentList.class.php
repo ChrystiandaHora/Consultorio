@@ -191,16 +191,16 @@ class PaymentList extends TStandardList
         TTransaction::open('sample');
         $conn = TTransaction::get();
         //pegando o id da area da consulta
-        $stmt = $conn->query('SELECT area_do_medico_nome FROM consulta WHERE id ='.$param["id_paciente"]);
+        $stmt = $conn->query('SELECT id_paciente FROM nota_fiscal WHERE id ='.$param["id_paciente"]);
         $data = $stmt->fetchAll();
         if($data)
         {
         foreach ($data as $row) {
-            $id_medico_area = $row["area_do_medico_nome"];
+            $id_medico_area = $row["id_paciente"];
             }
         }
         //pegando o nome da area do medico
-        $stmt = $conn->query('SELECT area_do_medico FROM medico WHERE id ='.$id_medico_area);
+        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id ='.$id_medico_area);
         $data = $stmt->fetchAll();
         if($data)
         {
