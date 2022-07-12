@@ -205,7 +205,7 @@ class PaymentList extends TStandardList
         if($data)
         {
         foreach ($data as $row) {
-            $nome_medico_area =[$id_medico_area => $row["area_do_medico"]];
+            $nome_medico_area =[$id_medico_area => $row["id_area_do_medico"]];
             }
         }
         //imprimindo o TCombo
