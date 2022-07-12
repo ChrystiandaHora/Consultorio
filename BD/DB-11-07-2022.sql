@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `consulta` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela consultorio.consulta: ~20 rows (aproximadamente)
+-- Copiando dados para a tabela consultorio.consulta: ~22 rows (aproximadamente)
 /*!40000 ALTER TABLE `consulta` DISABLE KEYS */;
 INSERT INTO `consulta` (`id`, `paciente_id`, `titulo`, `medico_id`, `area_do_medico_nome`, `dtinicio`, `dtfim`) VALUES
 	(1, '1', 'Consulta - Primeira Vez', '2', 2, '2022-06-09 17:15:00', '2022-06-09 17:30:00'),
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `medico` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela consultorio.medico: ~9 rows (aproximadamente)
+-- Copiando dados para a tabela consultorio.medico: ~10 rows (aproximadamente)
 /*!40000 ALTER TABLE `medico` DISABLE KEYS */;
 INSERT INTO `medico` (`id`, `nome`, `sexo`, `idade`, `cpf`, `area_do_medico`, `telefone`, `email`) VALUES
 	(1, 'Victor Anderson dos Santos', 'M', 42, '190.872.874-45', 'Nefrologista', '(84) 98695-5283', 'victorandersondossantos@righettorosa.com.br'),
@@ -95,21 +95,21 @@ CREATE TABLE IF NOT EXISTS `nota_fiscal` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela consultorio.nota_fiscal: ~9 rows (aproximadamente)
+-- Copiando dados para a tabela consultorio.nota_fiscal: ~12 rows (aproximadamente)
 /*!40000 ALTER TABLE `nota_fiscal` DISABLE KEYS */;
 INSERT INTO `nota_fiscal` (`id`, `id_paciente`, `id_area_do_medico`, `payment`, `status`, `dtinicio`) VALUES
 	(1, '1', 1, '222,22', 'Pago', '2022-06-15 14:50:00'),
 	(2, '2', 6, '200,00', 'Pago', '2022-06-14 14:50:00'),
 	(3, '3', 2, '260,00', 'Pago', '2022-06-15 15:53:00'),
-	(4, '4', 7, '270,00', 'Próximo do vencimento', '2022-06-22 11:54:00'),
+	(4, '4', 7, '270,00', 'Atrasado', '2022-06-22 11:54:00'),
 	(5, '5', 5, '555,55', 'Próximo do vencimento', '2022-06-15 16:15:00'),
-	(6, '6', 6, '666,66', 'Aguardando Pagamento', '2022-06-16 13:05:00'),
-	(7, '7', 7, '222,22', 'Aguardando Pagamento', '2022-06-23 14:32:00'),
+	(6, '6', 6, '666,66', 'Próximo do vencimento', '2022-06-16 13:05:00'),
+	(7, '7', 7, '222,22', 'Próximo do vencimento', '2022-06-23 14:32:00'),
 	(8, '10', 3, '555,55', 'Aguardando Pagamento', '2022-06-23 14:37:00'),
 	(9, '11', 2, '333,33', 'Aguardando Pagamento', '2022-06-30 15:07:00'),
 	(10, '22', 8, '299,99', 'Aguardando Pagamento', '2022-07-07 15:23:00'),
 	(11, '20', 8, '111,11', 'Aguardando Pagamento', '2022-06-08 14:00:00'),
-	(12, '20', 8, '222,22', 'Aguardando Pagamento', '2022-06-07 15:20:00');
+	(12, '20', 9, '222,22', 'Aguardando Pagamento', '2022-06-07 15:20:00');
 /*!40000 ALTER TABLE `nota_fiscal` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela consultorio.paciente
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela consultorio.paciente: ~18 rows (aproximadamente)
+-- Copiando dados para a tabela consultorio.paciente: ~19 rows (aproximadamente)
 /*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
 INSERT INTO `paciente` (`id`, `nome`, `sexo`, `idade`, `cpf`, `endereco`, `cidade`, `numero`, `bairro`, `uf`, `complemento`, `telefone`, `email`) VALUES
 	(1, 'Manuela Camila Fabiana da Luz', 'F', 23, '986.019.354-19', 'Rua Vicente Martins Fernandes', 'Recife', '554', 'Piedade', 'PE', 'Proximo a padaria 3 irmãos', '(81) 99969-9853', 'manuelacamiladaluz@temavonfeccaosjc.com.br'),
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `system_access_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela consultorio.system_access_log: ~28 rows (aproximadamente)
+-- Copiando dados para a tabela consultorio.system_access_log: ~35 rows (aproximadamente)
 /*!40000 ALTER TABLE `system_access_log` DISABLE KEYS */;
 INSERT INTO `system_access_log` (`id`, `sessionid`, `login`, `login_time`, `login_year`, `login_month`, `login_day`, `logout_time`, `impersonated`, `access_ip`, `impersonated_by`) VALUES
 	(1, 'acr0o9gta22hs6eugdthbg5ncq', 'user', '2022-06-08 16:03:35', '2022', '06', '08', '2022-06-08 16:03:38', 'N', '::1', NULL),
@@ -221,7 +221,8 @@ INSERT INTO `system_access_log` (`id`, `sessionid`, `login`, `login_time`, `logi
 	(97, '5gh6ftb16nsuh0r6jhq1oe5ref', 'admin', '2022-07-07 11:46:35', '2022', '07', '07', '2022-07-07 13:10:30', 'N', '::1', NULL),
 	(98, 'f5v8838f2fd2g9l1q3157e71pp', 'admin', '2022-07-07 13:10:35', '2022', '07', '07', '2022-07-07 14:44:44', 'N', '::1', NULL),
 	(99, '8b1rkrfo1tog8ht925vtmulrq1', 'admin', '2022-07-07 14:44:50', '2022', '07', '07', '2022-07-07 16:40:06', 'N', '::1', NULL),
-	(100, 'i88jv2ggr4qb7llosddbekov4n', 'admin', '2022-07-08 12:13:35', '2022', '07', '08', NULL, 'N', '::1', NULL);
+	(100, 'i88jv2ggr4qb7llosddbekov4n', 'admin', '2022-07-08 12:13:35', '2022', '07', '08', NULL, 'N', '::1', NULL),
+	(101, 'tv4puhmkkomehvb5on63ea6t3e', 'admin', '2022-07-11 12:15:02', '2022', '07', '11', NULL, 'N', '::1', NULL);
 /*!40000 ALTER TABLE `system_access_log` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela consultorio.system_access_notification_log
@@ -234,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `system_access_notification_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela consultorio.system_access_notification_log: ~27 rows (aproximadamente)
+-- Copiando dados para a tabela consultorio.system_access_notification_log: ~34 rows (aproximadamente)
 /*!40000 ALTER TABLE `system_access_notification_log` DISABLE KEYS */;
 INSERT INTO `system_access_notification_log` (`id`, `login`, `email`, `ip_address`, `login_time`) VALUES
 	(1, 'user', 'user@user.net', '::1', '2022-06-08 16:03:35'),
@@ -270,7 +271,8 @@ INSERT INTO `system_access_notification_log` (`id`, `login`, `email`, `ip_addres
 	(97, 'admin', 'admin@admin.net', '::1', '2022-07-07 11:46:35'),
 	(98, 'admin', 'admin@admin.net', '::1', '2022-07-07 13:10:35'),
 	(99, 'admin', 'admin@admin.net', '::1', '2022-07-07 14:44:50'),
-	(100, 'admin', 'admin@admin.net', '::1', '2022-07-08 12:13:35');
+	(100, 'admin', 'admin@admin.net', '::1', '2022-07-08 12:13:35'),
+	(101, 'admin', 'admin@admin.net', '::1', '2022-07-11 12:15:02');
 /*!40000 ALTER TABLE `system_access_notification_log` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela consultorio.system_change_log
@@ -325,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `system_document_category` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela consultorio.system_document_category: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela consultorio.system_document_category: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `system_document_category` DISABLE KEYS */;
 INSERT INTO `system_document_category` (`id`, `name`) VALUES
 	(1, 'Documentação');
@@ -382,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `system_group_program` (
   CONSTRAINT `system_group_program_ibfk_2` FOREIGN KEY (`system_program_id`) REFERENCES `system_program` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela consultorio.system_group_program: ~73 rows (aproximadamente)
+-- Copiando dados para a tabela consultorio.system_group_program: ~75 rows (aproximadamente)
 /*!40000 ALTER TABLE `system_group_program` DISABLE KEYS */;
 INSERT INTO `system_group_program` (`id`, `system_group_id`, `system_program_id`) VALUES
 	(1, 1, 1),
@@ -459,7 +461,11 @@ INSERT INTO `system_group_program` (`id`, `system_group_id`, `system_program_id`
 	(132, 2, 61),
 	(133, 2, 62),
 	(134, 1, 63),
-	(135, 2, 63);
+	(135, 2, 63),
+	(136, 1, 64),
+	(137, 2, 64),
+	(138, 1, 65),
+	(139, 2, 65);
 /*!40000 ALTER TABLE `system_group_program` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela consultorio.system_message
@@ -515,7 +521,7 @@ CREATE TABLE IF NOT EXISTS `system_program` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela consultorio.system_program: ~60 rows (aproximadamente)
+-- Copiando dados para a tabela consultorio.system_program: ~63 rows (aproximadamente)
 /*!40000 ALTER TABLE `system_program` DISABLE KEYS */;
 INSERT INTO `system_program` (`id`, `name`, `controller`) VALUES
 	(1, 'System Group Form', 'SystemGroupForm'),
@@ -580,7 +586,9 @@ INSERT INTO `system_program` (`id`, `name`, `controller`) VALUES
 	(60, 'Relatorio Consulta', 'RelatorioConsulta'),
 	(61, 'Calendar Event Form', 'CalendarEventForm'),
 	(62, 'Full Calendar Database View', 'FullCalendarDatabaseView'),
-	(63, 'Grafico Colunas', 'GraficoColunas');
+	(63, 'Grafico Colunas', 'GraficoColunas'),
+	(64, 'Relatorio Paciente', 'RelatorioPaciente'),
+	(65, 'Relatorio Nota Fiscal', 'RelatorioNotaFiscal');
 /*!40000 ALTER TABLE `system_program` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela consultorio.system_request_log
@@ -631,7 +639,7 @@ CREATE TABLE IF NOT EXISTS `system_sql_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela consultorio.system_sql_log: ~111 rows (aproximadamente)
+-- Copiando dados para a tabela consultorio.system_sql_log: ~114 rows (aproximadamente)
 /*!40000 ALTER TABLE `system_sql_log` DISABLE KEYS */;
 INSERT INTO `system_sql_log` (`id`, `logdate`, `login`, `database_name`, `sql_command`, `statement_type`, `access_ip`, `transaction_id`, `log_trace`, `session_id`, `class_name`, `php_sapi`, `request_id`, `log_year`, `log_month`, `log_day`) VALUES
 	(1, '2022-06-08 21:44:29', 'admin', 'permission', 'INSERT INTO system_program (id, name, controller) VALUES (48, \'Paciente List\', \'PacienteList\')', 'INSERT', '::1', '62a1426d06152', '#0 C:\\Users\\chrys\\Desktop\\usbwebserver\\root\\adianti-template-7.4.1\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'INSERT INTO sys...\')\n#1 C:\\Users\\chrys\\Desktop\\usbwebserver\\root\\adianti-template-7.4.1\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'INSERT INTO sys...\')\n#2 C:\\Users\\chrys\\Desktop\\usbwebserver\\root\\adianti-template-7.4.1\\Consultorio\\app\\control\\admin\\SystemProgramForm.class.php(210): Adianti\\Database\\TRecord->store()\n#3 [internal function]: SystemProgramForm->onSave(Array)\n#4 C:\\Users\\chrys\\Desktop\\usbwebserver\\root\\adianti-template-7.4.1\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#5 C:\\Users\\chrys\\Desktop\\usbwebserver\\root\\adianti-template-7.4.1\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#6 C:\\Users\\chrys\\Desktop\\usbwebserver\\root\\adianti-template-7.4.1\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#7 C:\\Users\\chrys\\Desktop\\usbwebserver\\root\\adianti-template-7.4.1\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#8 C:\\Users\\chrys\\Desktop\\usbwebserver\\root\\adianti-template-7.4.1\\Consultorio\\engine.php(66): TApplication::run()\n#9 {main}', '9i8s1qh6va1ct881akbsnqo2om', 'SystemProgramForm', 'apache2handler', '62a1426ce92c5', '2022', '06', '08'),
@@ -747,7 +755,19 @@ INSERT INTO `system_sql_log` (`id`, `logdate`, `login`, `database_name`, `sql_co
 	(548, '2022-07-08 14:41:50', 'admin', 'permission', 'INSERT INTO nota_fiscal (id_paciente, id_area_do_medico, payment, status, dtinicio) VALUES (\'21\', \'9\', \'111,11\', \'Aguardando Pagamento\', \'2022-06-07 15:20\')', 'INSERT', '::1', '62c86c5eaa411', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'INSERT INTO not...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'INSERT INTO not...\')\n#2 C:\\laragon\\www\\Consultorio\\lib\\adianti\\base\\AdiantiStandardFormTrait.php(72): Adianti\\Database\\TRecord->store()\n#3 [internal function]: Adianti\\Base\\TStandardForm->onSave(Array)\n#4 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#7 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#8 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#9 {main}', 'i88jv2ggr4qb7llosddbekov4n', 'PaymentForm', 'apache2handler', '62c86c5e84c44', '2022', '07', '08'),
 	(549, '2022-07-08 15:56:54', 'admin', 'permission', 'UPDATE nota_fiscal SET id_paciente = \'21\', id_area_do_medico = \'9\', payment = \'111,11\', status = \'Aguardando Pagamento\', dtinicio = \'2022-06-07 15:20\' WHERE (id = \'12\')', 'UPDATE', '::1', '62c87df6e4c05', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'UPDATE nota_fis...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'UPDATE nota_fis...\')\n#2 C:\\laragon\\www\\Consultorio\\lib\\adianti\\base\\AdiantiStandardFormTrait.php(72): Adianti\\Database\\TRecord->store()\n#3 [internal function]: Adianti\\Base\\TStandardForm->onSave(Array)\n#4 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#7 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#8 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#9 {main}', 'i88jv2ggr4qb7llosddbekov4n', 'PaymentForm', 'apache2handler', '62c87df6b90e6', '2022', '07', '08'),
 	(550, '2022-07-08 16:01:43', 'admin', 'permission', 'UPDATE nota_fiscal SET id_paciente = \'21\', id_area_do_medico = \'9\', payment = \'222,22\', status = \'Aguardando Pagamento\', dtinicio = \'2022-06-07 15:20\' WHERE (id = \'12\')', 'UPDATE', '::1', '62c87f1789912', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'UPDATE nota_fis...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'UPDATE nota_fis...\')\n#2 C:\\laragon\\www\\Consultorio\\lib\\adianti\\base\\AdiantiStandardFormTrait.php(72): Adianti\\Database\\TRecord->store()\n#3 [internal function]: Adianti\\Base\\TStandardForm->onSave(Array)\n#4 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#7 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#8 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#9 {main}', 'i88jv2ggr4qb7llosddbekov4n', 'PaymentForm', 'apache2handler', '62c87f175b565', '2022', '07', '08'),
-	(551, '2022-07-08 16:03:30', 'admin', 'permission', 'UPDATE nota_fiscal SET id_paciente = \'20\', id_area_do_medico = \'8\', payment = \'222,22\', status = \'Aguardando Pagamento\', dtinicio = \'2022-06-07 15:20\' WHERE (id = \'12\')', 'UPDATE', '::1', '62c87f82d5ca0', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'UPDATE nota_fis...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'UPDATE nota_fis...\')\n#2 C:\\laragon\\www\\Consultorio\\lib\\adianti\\base\\AdiantiStandardFormTrait.php(72): Adianti\\Database\\TRecord->store()\n#3 [internal function]: Adianti\\Base\\TStandardForm->onSave(Array)\n#4 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#7 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#8 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#9 {main}', 'i88jv2ggr4qb7llosddbekov4n', 'PaymentForm', 'apache2handler', '62c87f82a8697', '2022', '07', '08');
+	(551, '2022-07-08 16:03:30', 'admin', 'permission', 'UPDATE nota_fiscal SET id_paciente = \'20\', id_area_do_medico = \'8\', payment = \'222,22\', status = \'Aguardando Pagamento\', dtinicio = \'2022-06-07 15:20\' WHERE (id = \'12\')', 'UPDATE', '::1', '62c87f82d5ca0', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'UPDATE nota_fis...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'UPDATE nota_fis...\')\n#2 C:\\laragon\\www\\Consultorio\\lib\\adianti\\base\\AdiantiStandardFormTrait.php(72): Adianti\\Database\\TRecord->store()\n#3 [internal function]: Adianti\\Base\\TStandardForm->onSave(Array)\n#4 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#7 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#8 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#9 {main}', 'i88jv2ggr4qb7llosddbekov4n', 'PaymentForm', 'apache2handler', '62c87f82a8697', '2022', '07', '08'),
+	(552, '2022-07-11 14:00:05', 'admin', 'permission', 'UPDATE nota_fiscal SET id_paciente = \'20\', id_area_do_medico = \'9\', payment = \'222,22\', status = \'Aguardando Pagamento\', dtinicio = \'2022-06-07 15:20\' WHERE (id = \'12\')', 'UPDATE', '::1', '62cc571506891', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'UPDATE nota_fis...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'UPDATE nota_fis...\')\n#2 C:\\laragon\\www\\Consultorio\\lib\\adianti\\base\\AdiantiStandardFormTrait.php(72): Adianti\\Database\\TRecord->store()\n#3 [internal function]: Adianti\\Base\\TStandardForm->onSave(Array)\n#4 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#7 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#8 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#9 {main}', 'tv4puhmkkomehvb5on63ea6t3e', 'PaymentForm', 'apache2handler', '62cc5714da524', '2022', '07', '11'),
+	(553, '2022-07-11 14:00:51', 'admin', 'permission', 'UPDATE nota_fiscal SET id_paciente = \'4\', id_area_do_medico = \'7\', payment = \'270,00\', status = \'Atrasado\', dtinicio = \'2022-06-22 11:54\' WHERE (id = \'4\')', 'UPDATE', '::1', '62cc57437c9cc', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'UPDATE nota_fis...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'UPDATE nota_fis...\')\n#2 C:\\laragon\\www\\Consultorio\\lib\\adianti\\base\\AdiantiStandardFormTrait.php(72): Adianti\\Database\\TRecord->store()\n#3 [internal function]: Adianti\\Base\\TStandardForm->onSave(Array)\n#4 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#7 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#8 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#9 {main}', 'tv4puhmkkomehvb5on63ea6t3e', 'PaymentForm', 'apache2handler', '62cc57435c7cf', '2022', '07', '11'),
+	(554, '2022-07-11 14:00:56', 'admin', 'permission', 'UPDATE nota_fiscal SET id_paciente = \'6\', id_area_do_medico = \'6\', payment = \'666,66\', status = \'Próximo do vencimento\', dtinicio = \'2022-06-16 13:05\' WHERE (id = \'6\')', 'UPDATE', '::1', '62cc5748e4546', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'UPDATE nota_fis...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'UPDATE nota_fis...\')\n#2 C:\\laragon\\www\\Consultorio\\lib\\adianti\\base\\AdiantiStandardFormTrait.php(72): Adianti\\Database\\TRecord->store()\n#3 [internal function]: Adianti\\Base\\TStandardForm->onSave(Array)\n#4 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#7 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#8 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#9 {main}', 'tv4puhmkkomehvb5on63ea6t3e', 'PaymentForm', 'apache2handler', '62cc5748c4635', '2022', '07', '11'),
+	(555, '2022-07-11 14:01:06', 'admin', 'permission', 'UPDATE nota_fiscal SET id_paciente = \'7\', id_area_do_medico = \'7\', payment = \'222,22\', status = \'Próximo do vencimento\', dtinicio = \'2022-06-23 14:32\' WHERE (id = \'7\')', 'UPDATE', '::1', '62cc5752de08c', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'UPDATE nota_fis...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'UPDATE nota_fis...\')\n#2 C:\\laragon\\www\\Consultorio\\lib\\adianti\\base\\AdiantiStandardFormTrait.php(72): Adianti\\Database\\TRecord->store()\n#3 [internal function]: Adianti\\Base\\TStandardForm->onSave(Array)\n#4 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#7 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#8 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#9 {main}', 'tv4puhmkkomehvb5on63ea6t3e', 'PaymentForm', 'apache2handler', '62cc5752c5d70', '2022', '07', '11'),
+	(556, '2022-07-11 14:47:07', 'admin', 'permission', 'INSERT INTO system_program (id, name, controller) VALUES (64, \'Relatorio Paciente\', \'RelatorioPaciente\')', 'INSERT', '::1', '62cc621b0eed7', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'INSERT INTO sys...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'INSERT INTO sys...\')\n#2 C:\\laragon\\www\\Consultorio\\app\\control\\admin\\SystemProgramForm.class.php(210): Adianti\\Database\\TRecord->store()\n#3 [internal function]: SystemProgramForm->onSave(Array)\n#4 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#7 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#8 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#9 {main}', 'tv4puhmkkomehvb5on63ea6t3e', 'SystemProgramForm', 'apache2handler', '62cc621ae5385', '2022', '07', '11'),
+	(557, '2022-07-11 14:47:07', 'admin', 'permission', 'DELETE FROM system_group_program WHERE (system_program_id = 64)', 'DELETE', '::1', '62cc621b0eed7', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'DELETE FROM sys...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRepository.php(562): Adianti\\Database\\TTransaction::log(\'DELETE FROM sys...\')\n#2 C:\\laragon\\www\\Consultorio\\app\\model\\admin\\SystemProgram.class.php(82): Adianti\\Database\\TRepository->delete()\n#3 C:\\laragon\\www\\Consultorio\\app\\control\\admin\\SystemProgramForm.class.php(214): SystemProgram->clearParts()\n#4 [internal function]: SystemProgramForm->onSave(Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#7 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#8 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#9 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#10 {main}', 'tv4puhmkkomehvb5on63ea6t3e', 'SystemProgramForm', 'apache2handler', '62cc621ae5385', '2022', '07', '11'),
+	(558, '2022-07-11 14:47:07', 'admin', 'permission', 'INSERT INTO system_group_program (system_program_id, system_group_id, id) VALUES (64, \'1\', 136)', 'INSERT', '::1', '62cc621b0eed7', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'INSERT INTO sys...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'INSERT INTO sys...\')\n#2 C:\\laragon\\www\\Consultorio\\app\\model\\admin\\SystemProgram.class.php(51): Adianti\\Database\\TRecord->store()\n#3 C:\\laragon\\www\\Consultorio\\app\\control\\admin\\SystemProgramForm.class.php(220): SystemProgram->addSystemGroup(Object(SystemGroup))\n#4 [internal function]: SystemProgramForm->onSave(Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#7 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#8 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#9 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#10 {main}', 'tv4puhmkkomehvb5on63ea6t3e', 'SystemProgramForm', 'apache2handler', '62cc621ae5385', '2022', '07', '11'),
+	(559, '2022-07-11 14:47:07', 'admin', 'permission', 'INSERT INTO system_group_program (system_program_id, system_group_id, id) VALUES (64, \'2\', 137)', 'INSERT', '::1', '62cc621b0eed7', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'INSERT INTO sys...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'INSERT INTO sys...\')\n#2 C:\\laragon\\www\\Consultorio\\app\\model\\admin\\SystemProgram.class.php(51): Adianti\\Database\\TRecord->store()\n#3 C:\\laragon\\www\\Consultorio\\app\\control\\admin\\SystemProgramForm.class.php(220): SystemProgram->addSystemGroup(Object(SystemGroup))\n#4 [internal function]: SystemProgramForm->onSave(Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#7 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#8 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#9 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#10 {main}', 'tv4puhmkkomehvb5on63ea6t3e', 'SystemProgramForm', 'apache2handler', '62cc621ae5385', '2022', '07', '11'),
+	(560, '2022-07-11 14:57:32', 'admin', 'permission', 'INSERT INTO system_program (id, name, controller) VALUES (65, \'Relatorio Nota Fiscal\', \'RelatorioNotaFiscal\')', 'INSERT', '::1', '62cc648ccec41', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'INSERT INTO sys...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'INSERT INTO sys...\')\n#2 C:\\laragon\\www\\Consultorio\\app\\control\\admin\\SystemProgramForm.class.php(210): Adianti\\Database\\TRecord->store()\n#3 [internal function]: SystemProgramForm->onSave(Array)\n#4 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#7 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#8 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#9 {main}', 'tv4puhmkkomehvb5on63ea6t3e', 'SystemProgramForm', 'apache2handler', '62cc648c9ecef', '2022', '07', '11'),
+	(561, '2022-07-11 14:57:32', 'admin', 'permission', 'DELETE FROM system_group_program WHERE (system_program_id = 65)', 'DELETE', '::1', '62cc648ccec41', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'DELETE FROM sys...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRepository.php(562): Adianti\\Database\\TTransaction::log(\'DELETE FROM sys...\')\n#2 C:\\laragon\\www\\Consultorio\\app\\model\\admin\\SystemProgram.class.php(82): Adianti\\Database\\TRepository->delete()\n#3 C:\\laragon\\www\\Consultorio\\app\\control\\admin\\SystemProgramForm.class.php(214): SystemProgram->clearParts()\n#4 [internal function]: SystemProgramForm->onSave(Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#7 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#8 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#9 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#10 {main}', 'tv4puhmkkomehvb5on63ea6t3e', 'SystemProgramForm', 'apache2handler', '62cc648c9ecef', '2022', '07', '11'),
+	(562, '2022-07-11 14:57:32', 'admin', 'permission', 'INSERT INTO system_group_program (system_program_id, system_group_id, id) VALUES (65, \'1\', 138)', 'INSERT', '::1', '62cc648ccec41', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'INSERT INTO sys...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'INSERT INTO sys...\')\n#2 C:\\laragon\\www\\Consultorio\\app\\model\\admin\\SystemProgram.class.php(51): Adianti\\Database\\TRecord->store()\n#3 C:\\laragon\\www\\Consultorio\\app\\control\\admin\\SystemProgramForm.class.php(220): SystemProgram->addSystemGroup(Object(SystemGroup))\n#4 [internal function]: SystemProgramForm->onSave(Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#7 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#8 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#9 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#10 {main}', 'tv4puhmkkomehvb5on63ea6t3e', 'SystemProgramForm', 'apache2handler', '62cc648c9ecef', '2022', '07', '11'),
+	(563, '2022-07-11 14:57:33', 'admin', 'permission', 'INSERT INTO system_group_program (system_program_id, system_group_id, id) VALUES (65, \'2\', 139)', 'INSERT', '::1', '62cc648ccec41', '#0 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TTransaction.php(241): SystemSqlLogService->write(\'INSERT INTO sys...\')\n#1 C:\\laragon\\www\\Consultorio\\lib\\adianti\\database\\TRecord.php(686): Adianti\\Database\\TTransaction::log(\'INSERT INTO sys...\')\n#2 C:\\laragon\\www\\Consultorio\\app\\model\\admin\\SystemProgram.class.php(51): Adianti\\Database\\TRecord->store()\n#3 C:\\laragon\\www\\Consultorio\\app\\control\\admin\\SystemProgramForm.class.php(220): SystemProgram->addSystemGroup(Object(SystemGroup))\n#4 [internal function]: SystemProgramForm->onSave(Array)\n#5 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(96): call_user_func(Array, Array)\n#6 C:\\laragon\\www\\Consultorio\\lib\\adianti\\control\\TPage.php(258): Adianti\\Control\\TPage->run()\n#7 C:\\laragon\\www\\Consultorio\\lib\\adianti\\core\\AdiantiCoreApplication.php(96): Adianti\\Control\\TPage->show(Array)\n#8 C:\\laragon\\www\\Consultorio\\engine.php(27): Adianti\\Core\\AdiantiCoreApplication::run(\'1\')\n#9 C:\\laragon\\www\\Consultorio\\engine.php(66): TApplication::run()\n#10 {main}', 'tv4puhmkkomehvb5on63ea6t3e', 'SystemProgramForm', 'apache2handler', '62cc648c9ecef', '2022', '07', '11');
 /*!40000 ALTER TABLE `system_sql_log` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela consultorio.system_unit
@@ -822,7 +842,7 @@ CREATE TABLE IF NOT EXISTS `system_user_program` (
   CONSTRAINT `system_user_program_ibfk_2` FOREIGN KEY (`system_program_id`) REFERENCES `system_program` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela consultorio.system_user_program: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela consultorio.system_user_program: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `system_user_program` DISABLE KEYS */;
 INSERT INTO `system_user_program` (`id`, `system_user_id`, `system_program_id`) VALUES
 	(1, 2, 7);

@@ -146,8 +146,8 @@ class RelatorioPaciente extends TPage
       
         if($paciente)
         {
-          $widths=[220, 45, 50, 170, 210, 135, 40, 135, 45, 220, 140, 210];
-          //nome, sexo, idade, cpf, endereco, cidade, numero, bairro, uf, complemento, telefone, email, ESSE ULTIMO ZERO É DE ALGUMA PARADA PARA NAO QUEBRAR E APARECER ERRO ESTÁ DENTRO DA PADRONIZAÇÃO.
+          $widths=[260, 45, 50, 150, 250, 135, 70, 180, 45, 220, 140, 210];
+          //nome, sexo, idade, cpf, endereco, cidade, numero, bairro, uf, complemento, telefone, email
           switch($data->output)
           {
             case 'html':

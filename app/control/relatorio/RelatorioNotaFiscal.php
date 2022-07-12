@@ -95,7 +95,7 @@ class RelatorioNotaFiscal extends TPage
         $nota_fiscal = $repository-> load($criteria);
         if($nota_fiscal)
         {
-          $widths=[220, 220, 150, 220, 220];
+          $widths=[310, 220, 150, 220, 220];
           //id_paciente, id_area_do_medico, payment, status,dtinicio,ESSE ULTIMO ZERO É DE ALGUMA PARADA PARA NAO QUEBRAR E APARECER ERRO ESTÁ DENTRO DA PADRONIZAÇÃO.
           switch($data->output)
           {

@@ -15,6 +15,10 @@
         <action>RelatorioPaciente</action>
         <icon>fas:book fa-fw</icon>
       </menuitem>
+      <menuitem label="Relatório Médico">
+        <action>RelatorioMedico</action>
+        <icon>fas:book fa-fw</icon>
+      </menuitem>
     </menu>
   </menuitem>
   <menuitem label="Marcar Consulta">
