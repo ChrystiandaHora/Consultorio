@@ -36,32 +36,26 @@ class PaymentForm extends TStandardForm
         
         $action = new TAction([$this, 'mudaSelecao']);
         $paciente_nome->setChangeAction($action);
- 
-        $area_do_medico = new TDBCombo('id_area_do_medico','permission','medico','id','area_do_medico');
+        
+        $id_area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id','nome_area_medico');
 
         $payment = new TEntry('payment');
         $payment->setMask('999,99');
         
-        $dtinicio = new  TDateTime ('dtinicio', 'permission','consulta','id','dtinicio');
-        // $dtinicio = new  TDBCombo ('dtinicio', 'permission','consulta','id','dtinicio');
-        // $dtinicio = strtotime($dtinicio);
-
-
-        // $dtinicio->setMask('dd/mm/yyyy hh:ii');
-        // $dtinicio->setDatabaseMask('yyyy-mm-dd hh:ii');
+        $dtinicio = new  TDateTime ('dtinicio');
 
         $radio = new TRadioGroup('status');
         $radio->setLayout('horizontal');
         $radio->setUseButton();
         $items = ['Aguardando Pagamento'=>'Aguardando Pagamento', 'Pago'=>'Pago','Próximo do vencimento'=>'Próximo do vencimento','Atrasado'=>'Atrasado'];
         $radio->addItems($items);
-        $radio->setValue('Aguardando Pagamento');
+        $radio->setValue('');
 
 
         // add the fields
         $this->form->addFields( [new TLabel('ID')], [$id] );
         $this->form->addFields( [new TLabel('Paciente')], [$paciente_nome] );
-        $this->form->addFields( [new TLabel('Área da Consulta')], [$area_do_medico] );
+        $this->form->addFields( [new TLabel('Área da Consulta')], [$id_area_do_medico] );
         $this->form->addFields( [new TLabel('Pagamento')], [$payment] );
         $this->form->addFields( [new TLabel('Status')],  [$radio] );
         $this->form->addFields( [new TLabel('Data Inicio')], [$dtinicio] );
@@ -72,13 +66,14 @@ class PaymentForm extends TStandardForm
         $paciente_nome->setSize('50%');
         $paciente_nome->addValidation(('Paciente'), new TRequiredValidator );
 
-        $area_do_medico->setSize('50%');
-        $area_do_medico->addValidation(('Área da Consulta'), new TRequiredValidator );
+        $id_area_do_medico->setSize('50%');
+        $id_area_do_medico->addValidation(('Área da Consulta'), new TRequiredValidator );
 
         $payment->setSize('50%');
         $payment->addValidation(('Pagamento'), new TRequiredValidator );
 
         $radio->setSize('50%');
+        $radio->addValidation(('Status'), new TRequiredValidator );
 
         $dtinicio->setSize('50%');
         $dtinicio->addValidation(('Data Inicio'), new TRequiredValidator );
@@ -112,12 +107,12 @@ class PaymentForm extends TStandardForm
             }
         }
         //pegando o nome do medico baseado na sua id da area antes pega
-        $stmt = $conn->query('SELECT nome FROM medico WHERE id ='.$id_medico_area);
+        $stmt = $conn->query('SELECT area_do_medico FROM medico WHERE id ='.$id_medico_area);
         $data = $stmt->fetchAll();
         if($data)
         {
         foreach ($data as $row) {
-            $nome_medico_area =[$id_medico_area => $row["nome"]];
+            $nome_medico_area =[$id_medico_area => $row["area_do_medico"]];
             }
         }
         //imprimindo o TCombo

@@ -50,8 +50,6 @@ class PaymentList extends TStandardList
         $payment->setMask('999,99');
 
         $dtinicio = new  TDateTime ('dtinicio');
-        $dtinicio->setMask('dd/mm/yyyy hh:ii');
-        $dtinicio->setDatabaseMask('yyyy-mm-dd hh:ii');
 
         $radio = new TRadioGroup('status');
         $radio->setLayout('horizontal');
@@ -192,22 +190,22 @@ class PaymentList extends TStandardList
     {
         TTransaction::open('sample');
         $conn = TTransaction::get();
-        //pegando a area do medico, com parametros de comparacao do paciente
-        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id_paciente ='.$param["id_paciente"]);
+        //pegando o id da area da consulta
+        $stmt = $conn->query('SELECT area_do_medico_nome FROM consulta WHERE id ='.$param["id_paciente"]);
         $data = $stmt->fetchAll();
         if($data)
         {
         foreach ($data as $row) {
-            $id_medico_area = $row["id_area_do_medico"];
+            $id_medico_area = $row["area_do_medico_nome"];
             }
         }
-        //pegando o nome do medico baseado na sua id da area antes pega
-        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id ='.$id_medico_area);
+        //pegando o nome da area do medico
+        $stmt = $conn->query('SELECT area_do_medico FROM medico WHERE id ='.$id_medico_area);
         $data = $stmt->fetchAll();
         if($data)
         {
         foreach ($data as $row) {
-            $nome_medico_area =[$id_medico_area => $row["id_area_do_medico"]];
+            $nome_medico_area =[$id_medico_area => $row["area_do_medico"]];
             }
         }
         //imprimindo o TCombo

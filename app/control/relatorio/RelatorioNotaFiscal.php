@@ -131,7 +131,7 @@ class RelatorioNotaFiscal extends TPage
 
           $table->setFooterCallback(function($table){
             $table -> addRow();
-            $table -> addCell(date('Y-m-d H:i:s'),'center','footer',5);
+            $table -> addCell(date('d/m/Y H:i:s'),'center','footer',5);
 
           });
 
