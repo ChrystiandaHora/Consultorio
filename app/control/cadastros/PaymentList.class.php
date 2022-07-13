@@ -203,11 +203,11 @@ class PaymentList extends TStandardList
         if($data)
         {
         foreach ($data as $row) {
-            $nome_medico_area =[$id_area_do_medico => $row["id_area_do_medico"]];
+            $medico_area =[$id_area_do_medico => $row["id_area_do_medico"]];
             }
         }
         //imprimindo o TCombo
-        TCombo::reload('form_search_Pagamento', 'area_do_medico', $nome_medico_area);
+        TCombo::reload('form_search_Pagamento', 'id_area_do_medico', $medico_area);
         TTransaction::close();
     }
     public function onClear()
