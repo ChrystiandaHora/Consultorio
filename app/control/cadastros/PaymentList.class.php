@@ -46,7 +46,7 @@ class PaymentList extends TStandardList
         $paciente_nome->setChangeAction($action);
         
         $area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id_area_do_medico','nome_area_medico');
-        $payment = new TEntry('pagamento');
+        $payment = new TEntry('payment');
         $dtinicio = new  TDateTime ('dtinicio');
         
         $payment->setMask('999,99');
@@ -194,16 +194,16 @@ class PaymentList extends TStandardList
         if($data)
         {
         foreach ($data as $row) {
-            $area_do_medico = $row["id_paciente"];
+            $id_area_do_medico = $row["id_paciente"];
             }
         }
-        //pegando o nome da area do medico
-        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id ='.$area_do_medico);
+        //pegando o nome do medico baseado na sua id da area antes pega
+        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id ='.$id_area_do_medico);
         $data = $stmt->fetchAll();
         if($data)
         {
         foreach ($data as $row) {
-            $nome_medico_area =[$area_do_medico => $row["id_area_do_medico"]];
+            $nome_medico_area =[$id_area_do_medico => $row["id_area_do_medico"]];
             }
         }
         //imprimindo o TCombo

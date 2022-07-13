@@ -98,21 +98,21 @@ class PaymentForm extends TStandardForm
         TTransaction::open('sample');
         $conn = TTransaction::get();
         //pegando o id da area da consulta
-        $stmt = $conn->query('SELECT id_paciente FROM nota_fiscal WHERE id ='.$param["id_paciente"]);
+        $stmt = $conn->query('SELECT area_do_medico_nome FROM consulta WHERE id ='.$param["id_paciente"]);
         $data = $stmt->fetchAll();
         if($data)
         {
         foreach ($data as $row) {
-            $area_do_medico = $row["id_paciente"];
+            $id_area_do_medico = $row["area_do_medico_nome"];
             }
         }
-        //pegando o nome da area do medico
-        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id ='.$area_do_medico);
+        //pegando o nome do medico baseado na sua id da area antes pega
+        $stmt = $conn->query('SELECT area_do_medico FROM medico WHERE id ='.$id_area_do_medico);
         $data = $stmt->fetchAll();
         if($data)
         {
         foreach ($data as $row) {
-            $nome_medico_area =[$area_do_medico => $row["id_area_do_medico"]];
+            $nome_medico_area =[$id_area_do_medico => $row["area_do_medico"]];
             }
         }
         //imprimindo o TCombo
