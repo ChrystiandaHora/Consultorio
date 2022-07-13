@@ -32,12 +32,12 @@ class PaymentForm extends TStandardForm
         
         // create the form fields
         $id = new TEntry('id');
-        $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id_paciente','nome_paciente');
+        $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id','nome_paciente');
         
         $action = new TAction([$this, 'mudaSelecao']);
         $paciente_nome->setChangeAction($action);
         
-        $id_area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id','nome_area_medico');
+        $id_area_do_medico = new TDBCombo('id_area_do_medico','permission','medico','id','area_do_medico');
 
         $payment = new TEntry('payment');
         $payment->setMask('999,99');

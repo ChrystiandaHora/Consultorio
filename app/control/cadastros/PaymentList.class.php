@@ -30,7 +30,7 @@ class PaymentList extends TStandardList
         parent::addFilterField('id', '=', 'id'); // filterField, operator, formField
         parent::addFilterField('id_paciente', '=', 'id_paciente'); // filterField, operator, formField
         parent::addFilterField('id_area_do_medico', '=', 'id_area_do_medico'); // filterField, operator, formField
-        parent::addFilterField('payment', '=', 'payment');
+        parent::addFilterField('payment', 'like', 'payment');
         parent::addFilterField('status', '=', 'status');
         parent::addFilterField('dtinicio', '>=', 'dtinicio');
         
@@ -39,13 +39,13 @@ class PaymentList extends TStandardList
         $this->form->setFormTitle('Nota Fiscal');
         
         // create the form fields
-        $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id_paciente','nome_paciente');
+        $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id','nome_paciente');
         
         $action = new TAction([$this, 'mudaSelecao']);
         $paciente_nome->setChangeAction($action);
         
 
-        $id_area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id_area_do_medico','nome_area_medico');
+        $id_area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id','nome_area_medico');
         $payment = new TEntry('pagamento');
         $payment->setMask('999,99');
 
@@ -196,16 +196,16 @@ class PaymentList extends TStandardList
         if($data)
         {
         foreach ($data as $row) {
-            $id_medico_area = $row["id_paciente"];
+            $id_area_do_medico = $row["id_paciente"];
             }
         }
         //pegando o nome da area do medico
-        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id ='.$id_medico_area);
+        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id ='.$id_area_do_medico);
         $data = $stmt->fetchAll();
         if($data)
         {
         foreach ($data as $row) {
-            $nome_medico_area =[$id_medico_area => $row["id_area_do_medico"]];
+            $nome_medico_area =[$id_area_do_medico => $row["id_area_do_medico"]];
             }
         }
         //imprimindo o TCombo

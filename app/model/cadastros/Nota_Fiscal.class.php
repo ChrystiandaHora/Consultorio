@@ -46,6 +46,5 @@ class nota_fiscal extends TRecord
             $this->medico = new Medico($this->id_area_do_medico);
         return $this->medico->area_do_medico;
     }
-
     
 }
