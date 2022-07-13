@@ -32,12 +32,12 @@ class PaymentForm extends TStandardForm
         
         // create the form fields
         $id = new TEntry('id');
-        $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id','nome_paciente');
+        $paciente_nome = new TDBCombo('id_paciente','permission','consulta','paciente_id','nome_paciente');
         
         $action = new TAction([$this, 'mudaSelecao']);
         $paciente_nome->setChangeAction($action);
         
-        $id_area_do_medico = new TDBCombo('id_area_do_medico','permission','medico','id','area_do_medico');
+        $area_do_medico = new TDBCombo('id_area_do_medico','permission','consulta','id','area_do_medico_nome');
 
         $payment = new TEntry('payment');
         $payment->setMask('999,99');
@@ -55,7 +55,7 @@ class PaymentForm extends TStandardForm
         // add the fields
         $this->form->addFields( [new TLabel('ID')], [$id] );
         $this->form->addFields( [new TLabel('Paciente')], [$paciente_nome] );
-        $this->form->addFields( [new TLabel('Área da Consulta')], [$id_area_do_medico] );
+        $this->form->addFields( [new TLabel('Área da Consulta')], [$area_do_medico] );
         $this->form->addFields( [new TLabel('Pagamento')], [$payment] );
         $this->form->addFields( [new TLabel('Status')],  [$radio] );
         $this->form->addFields( [new TLabel('Data Inicio')], [$dtinicio] );
@@ -66,8 +66,8 @@ class PaymentForm extends TStandardForm
         $paciente_nome->setSize('50%');
         $paciente_nome->addValidation(('Paciente'), new TRequiredValidator );
 
-        $id_area_do_medico->setSize('50%');
-        $id_area_do_medico->addValidation(('Área da Consulta'), new TRequiredValidator );
+        $area_do_medico->setSize('50%');
+        $area_do_medico->addValidation(('Área da Consulta'), new TRequiredValidator );
 
         $payment->setSize('50%');
         $payment->addValidation(('Pagamento'), new TRequiredValidator );
@@ -103,16 +103,16 @@ class PaymentForm extends TStandardForm
         if($data)
         {
         foreach ($data as $row) {
-            $id_medico_area = $row["area_do_medico_nome"];
+            $id_area_do_medico = $row["area_do_medico_nome"];
             }
         }
         //pegando o nome do medico baseado na sua id da area antes pega
-        $stmt = $conn->query('SELECT area_do_medico FROM medico WHERE id ='.$id_medico_area);
+        $stmt = $conn->query('SELECT area_do_medico FROM medico WHERE id ='.$id_area_do_medico);
         $data = $stmt->fetchAll();
         if($data)
         {
         foreach ($data as $row) {
-            $nome_medico_area =[$id_medico_area => $row["area_do_medico"]];
+            $nome_medico_area =[$id_area_do_medico => $row["area_do_medico"]];
             }
         }
         //imprimindo o TCombo

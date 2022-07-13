@@ -45,7 +45,7 @@ class PaymentList extends TStandardList
         $paciente_nome->setChangeAction($action);
         
 
-        $id_area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id','nome_area_medico');
+        $area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id_area_do_medico','nome_area_medico');
         $payment = new TEntry('pagamento');
         $payment->setMask('999,99');
 
@@ -61,12 +61,12 @@ class PaymentList extends TStandardList
         // add the fields
         $this->form->addFields( [new TLabel('Paciente')], [$paciente_nome] );
         $this->form->addFields( [new TLabel('Status')], [$radio] );
-        $this->form->addFields( [new TLabel('Área da Consulta')], [$id_area_do_medico] );
+        $this->form->addFields( [new TLabel('Área da Consulta')], [$area_do_medico] );
         $this->form->addFields( [new TLabel('Pagamento')], [$payment] );
         $this->form->addFields( [new TLabel('Data Inicio')], [$dtinicio] );
 
         $paciente_nome->setSize('50%');
-        $id_area_do_medico->setSize('50%');
+        $area_do_medico->setSize('50%');
         $payment->setSize('50%');
         $dtinicio->setSize('50%');
         $radio->setSize('50%');
@@ -88,14 +88,14 @@ class PaymentList extends TStandardList
         
         // creates the datagrid columns
         $column_paciente = new TDataGridColumn('nome_paciente', ('Paciente'), 'left');
-        $column_id_area_do_medico = new TDataGridColumn('nome_area_medico', ('Área da Consulta'), 'left');
+        $column_area_do_medico = new TDataGridColumn('nome_area_medico', ('Área da Consulta'), 'left');
         $column_payment = new TDataGridColumn('payment', ('Pagamento'), 'center');
         $column_status = new TDataGridColumn('status', ('Status'), 'center');
         $column_dtinicio = new TDataGridColumn('dtinicio', ('Data da Consulta'), 'center');
 
         // add the columns to the DataGrid
         $this->datagrid->addColumn($column_paciente);
-        $this->datagrid->addColumn($column_id_area_do_medico);
+        $this->datagrid->addColumn($column_area_do_medico);
         $this->datagrid->addColumn($column_payment);
         $this->datagrid->addColumn($column_status);
         $this->datagrid->addColumn($column_dtinicio);
@@ -105,9 +105,9 @@ class PaymentList extends TStandardList
         $order_paciente->setParameter('order', 'id_paciente');
         $column_paciente->setAction($order_paciente);
 
-        $order_id_area_do_medico = new TAction(array($this, 'onReload'));
-        $order_id_area_do_medico->setParameter('order', 'id_area_do_medico');
-        $column_id_area_do_medico->setAction($order_id_area_do_medico);
+        $order_area_do_medico = new TAction(array($this, 'onReload'));
+        $order_area_do_medico->setParameter('order', 'id_area_do_medico');
+        $column_area_do_medico->setAction($order_area_do_medico);
 
         $order_payment = new TAction(array($this, 'onReload'));
         $order_payment->setParameter('order', 'payment');
@@ -196,20 +196,20 @@ class PaymentList extends TStandardList
         if($data)
         {
         foreach ($data as $row) {
-            $id_area_do_medico = $row["id_paciente"];
+            $area_do_medico = $row["id_paciente"];
             }
         }
         //pegando o nome da area do medico
-        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id ='.$id_area_do_medico);
+        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id ='.$area_do_medico);
         $data = $stmt->fetchAll();
         if($data)
         {
         foreach ($data as $row) {
-            $nome_medico_area =[$id_area_do_medico => $row["id_area_do_medico"]];
+            $nome_medico_area =[$area_do_medico => $row["id_area_do_medico"]];
             }
         }
         //imprimindo o TCombo
-        TCombo::reload('form_search_Pagamento', 'id_area_do_medico', $nome_medico_area);
+        TCombo::reload('form_search_Pagamento', 'area_do_medico', $nome_medico_area);
         TTransaction::close();
     }
     public function onClear()
