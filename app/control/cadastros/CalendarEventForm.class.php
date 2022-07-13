@@ -1,7 +1,7 @@
 <?php
 /**
  * CalendarEventForm
- *
+ * 
  * @version    1.0
  * @package    sample
  * @subpackage tutor
