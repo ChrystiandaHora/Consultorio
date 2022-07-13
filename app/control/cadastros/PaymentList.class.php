@@ -40,18 +40,16 @@ class PaymentList extends TStandardList
         
         // create the form fields
         $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id','nome_paciente');
+        $radio = new TRadioGroup('status');
         
         $action = new TAction([$this, 'mudaSelecao']);
         $paciente_nome->setChangeAction($action);
         
-
         $area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id_area_do_medico','nome_area_medico');
         $payment = new TEntry('pagamento');
-        $payment->setMask('999,99');
-
         $dtinicio = new  TDateTime ('dtinicio');
-
-        $radio = new TRadioGroup('status');
+        
+        $payment->setMask('999,99');
         $radio->setLayout('horizontal');
         $radio->setUseButton();
         $items = ['Aguardando Pagamento'=>'Aguardando Pagamento', 'Pago'=>'Pago','Próximo do vencimento'=>'Próximo do vencimento','Atrasado'=>'Atrasado'];      
