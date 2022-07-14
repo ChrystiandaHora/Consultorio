@@ -21,11 +21,11 @@ class RelatorioConsulta extends TPage
       $this->form->setFormTitle('Relatorio das Consultas');
         
       // create the form fields
-      $area_do_medico_nome = new TDBCombo('area_do_medico_nome','permission','medico','id','area_do_medico');      
-      $paciente_id = new TDBCombo('paciente_id','permission','paciente','id','nome');
+      $area_do_medico_nome = new TDBCombo('area_do_medico_nome','permission','consulta','area_do_medico_nome','area_nome');      
+      $paciente_id = new TDBCombo('paciente_id','permission','consulta','paciente_id','nome_paciente');
       $titulo = new TCombo('titulo');
       $titulo -> addItems(['Consulta - Primeira Vez'=>'Consulta - Primeira Vez com o Médico(a)','Consulta - Retorno'=>'Consulta - Retorno', 'Exame'=>'Realização de Exame']);        
-      $medico_id = new TDBCombo('medico_id','permission','medico','id','nome');
+      $medico_id = new TDBCombo('medico_id','permission','consulta','medico_id','nome_medico');
       $dtinicio = new  TDateTime ('dtinicio');
       $dtfim = new  TDateTime ('dtfim');
       $output = new TRadioGroup('output');
@@ -88,7 +88,7 @@ class RelatorioConsulta extends TPage
         }
 
         $consulta = $repository-> load($criteria);
-      
+        
         if($consulta)
         {
           $widths=[260, 190, 260, 220, 220, 220,80];
@@ -128,7 +128,8 @@ class RelatorioConsulta extends TPage
 
           $table->setFooterCallback(function($table){
             $table -> addRow();
-            $table -> addCell(date('Y-m-d H:i:s'),'center','footer',7);
+            $table -> addCell(date('d/m/Y H:i:s'),'center','footer',7);
+
 
           });
 
@@ -139,7 +140,7 @@ class RelatorioConsulta extends TPage
             $style = $colour ? 'datap': 'datai';
             $table->addRow();
             $table->addCell($consulta->nome_paciente,'center',$style);
-            $table->addCell($consulta->area_do_medico_nome,'center',$style);
+            $table->addCell($consulta->area_nome,'center',$style);
             $table->addCell($consulta->nome_medico,'center',$style);
             $table->addCell($consulta->titulo,'center',$style);
             $table->addCell($consulta->dtinicio,'center',$style);

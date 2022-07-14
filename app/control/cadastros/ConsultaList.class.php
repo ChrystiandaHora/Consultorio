@@ -42,15 +42,15 @@ class ConsultaList extends TStandardList
         // create the form fields
         $id = new TEntry('id');
 
-        $paciente_id = new TDBCombo('paciente_id','sample','consulta','id','nome_paciente');
-        $area_da_consulta = new TDBCombo('area_do_medico_nome','sample','consulta','id','area_nome');
-
-        $action = new TAction([$this, 'mudaSelecao']);
-        $area_da_consulta->setChangeAction($action);
-
-        $medico_id = new TDBCombo('medico_id','sample','consulta','id','nome_medico');
+        $paciente_id = new TDBCombo('paciente_id','sample','consulta','paciente_id','nome_paciente');
+        $medico_id = new TDBCombo('medico_id','sample','consulta','medico_id','nome_medico');
         $titulo = new TCombo('titulo');
         $titulo -> addItems(['Consulta - Primeira Vez'=>'Consulta - Primeira Vez com o Médico(a)','Consulta - Retorno'=>'Consulta - Retorno', 'Exame'=>'Realização de Exame']);
+        
+        $action = new TAction([$this, 'mudaSelecao']);
+        $medico_id->setChangeAction($action);
+        
+        $area_da_consulta = new TDBCombo('area_do_medico_nome','sample','consulta','area_do_medico_nome','area_nome');
         $dtinicio = new  TDateTime ('dtinicio');
         $dtfim = new  TDateTime ('dtfim');
 
@@ -181,17 +181,27 @@ class ConsultaList extends TStandardList
     static function mudaSelecao($param)
     {
         TTransaction::open('sample');
-        $conn = TTransaction::get("id");
-        //pegando o nome do medico baseado no seu id
-        $stmt = $conn->query('SELECT nome FROM medico WHERE id ='.$param["area_do_medico_nome"]);
+        $conn = TTransaction::get();
+        //pegando o id do paciente através do param
+        $stmt = $conn->query('SELECT area_do_medico_nome FROM consulta WHERE medico_id ='.$param["medico_id"]);
         $data = $stmt->fetchAll();
         if($data)
         {
-        foreach ($data as $row) {
-            $nome_medico_area =[$param["area_do_medico_nome"] => $row["nome"]];
+            foreach ($data as $row) {
+                $medico = $row["area_do_medico_nome"];
             }
         }
-        TCombo::reload('form_search_Consulta', 'medico_id', $nome_medico_area);
+        //pegando a area do medico relacionado ao id do paciente encontrado acima
+        $stmt = $conn->query('SELECT area_do_medico FROM medico WHERE id ='.$medico);
+        $data2 = $stmt->fetchAll();
+        if($data2)
+        {
+            foreach ($data2 as $row) {
+                $area_consulta =[$medico => $row["area_do_medico"]];
+            }
+        }
+        //imprimindo o TCombo
+        TCombo::reload('form_search_Consulta', 'area_do_medico_nome', $area_consulta);
         TTransaction::close();
     }
     public function onClear()

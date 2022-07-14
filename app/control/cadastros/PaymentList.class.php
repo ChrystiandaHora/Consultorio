@@ -37,13 +37,13 @@ class PaymentList extends TStandardList
         $this->form->setFormTitle('Nota Fiscal');
         
         // create the form fields
-        $paciente = new TDBCombo('id_paciente','sample','nota_fiscal','id','nome_paciente');
+        $paciente = new TDBCombo('id_paciente','sample','nota_fiscal','id_paciente','nome_paciente');
         $radio = new TRadioGroup('status');
         
         $action = new TAction([$this, 'mudaSelecao']);
         $paciente->setChangeAction($action);
         
-        $area_do_medico = new TDBCombo('id_area_do_medico','sample','nota_fiscal','id','id_area_do_medico');
+        $area_do_medico = new TDBCombo('id_area_do_medico','sample','nota_fiscal','id_area_do_medico','area_nome');
         $payment = new TEntry('payment');
         $dtinicio = new  TDateTime ('dtinicio');
         
@@ -86,7 +86,7 @@ class PaymentList extends TStandardList
         
         // creates the datagrid columns
         $column_paciente = new TDataGridColumn('nome_paciente', ('Paciente'), 'left');
-        $column_area_do_medico = new TDataGridColumn('id_area_do_medico', ('Área da Consulta'), 'left');
+        $column_area_do_medico = new TDataGridColumn('area_nome', ('Área da Consulta'), 'left');
         $column_payment = new TDataGridColumn('payment', ('Pagamento'), 'center');
         $column_status = new TDataGridColumn('status', ('Status'), 'center');
         $column_dtinicio = new TDataGridColumn('dtinicio', ('Data da Consulta'), 'center');
@@ -189,25 +189,28 @@ class PaymentList extends TStandardList
         TTransaction::open('sample');
         $conn = TTransaction::get();
         //pegando o id do paciente através do param
-        $stmt = $conn->query('SELECT id_paciente FROM nota_fiscal WHERE id ='.$param["id_paciente"]);
+        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id_paciente ='.$param["id_paciente"]);
         $data = $stmt->fetchAll();
         if($data)
         {
             foreach ($data as $row) {
-                $id_area_do_medico = $row["id_paciente"];
+                $medico = $row["id_area_do_medico"];
             }
         }
         //pegando a area do medico relacionado ao id do paciente encontrado acima
-        $stmt = $conn->query('SELECT area_do_medico FROM medico WHERE id ='.$id_area_do_medico);
+        $stmt = $conn->query('SELECT area_do_medico FROM medico WHERE id ='.$medico);
         $data2 = $stmt->fetchAll();
         if($data2)
         {
             foreach ($data2 as $row) {
-                $area =[$id_area_do_medico => $row["area_do_medico"]];
+                $area_consulta =[$medico => $row["area_do_medico"]];
             }
         }
-        //imprimindo no TCombo
-        TCombo::reload('form_search_Pagamento', 'id_area_do_medico', $area);
+        //imprimindo o TCombo
+        echo '<pre>';
+        var_dump($data,$data2,$area_consulta);
+        echo '</pre>';
+        TCombo::reload('form_search_Consulta', 'id_area_do_medico', $area_consulta);
         TTransaction::close();
     }
     public function onClear()

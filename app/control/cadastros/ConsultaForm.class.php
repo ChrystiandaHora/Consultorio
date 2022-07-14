@@ -32,15 +32,15 @@ class ConsultaForm extends TStandardForm
         
         // create the form fields
         $id = new TEntry('id');
-        $area_consulta = new TDBCombo('area_do_medico_nome','permission','medico','id','area_do_medico');
-        
-        $action = new TAction([$this, 'mudaSelecao']);
-        $area_consulta->setChangeAction($action);
-        
-        $paciente = new TDBCombo('paciente_id','permission','paciente','id','nome');
         $titulo = new TCombo('titulo');
         $titulo -> addItems(['Consulta - Primeira Vez'=>'Consulta - Primeira Vez com o Médico(a)','Consulta - Retorno'=>'Consulta - Retorno', 'Exame'=>'Realização de Exame']);        
         $medico_id = new TDBCombo('medico_id','permission','medico','id','nome');
+
+        $action = new TAction([$this, 'mudaSelecao']);
+        $medico_id->setChangeAction($action);
+
+        $area_consulta = new TDBCombo('area_do_medico_nome','permission','medico','id','area_do_medico');
+        $paciente = new TDBCombo('paciente_id','permission','paciente','id','nome');
         $dtinicio = new  TDateTime ('dtinicio');
         $dtfim = new  TDateTime ('dtfim');
 
@@ -91,20 +91,23 @@ class ConsultaForm extends TStandardForm
         
         parent::add($container);
     }
+    
     static function mudaSelecao($param)
     {
         TTransaction::open('sample');
         $conn = TTransaction::get();
-        //pegando o nome do medico baseado no seu id
-        $stmt = $conn->query('SELECT nome FROM medico WHERE id ='.$param["area_do_medico_nome"]);
+        //pegando a area do medico com base no seu id
+        $stmt = $conn->query('SELECT area_do_medico FROM medico WHERE id ='.$param["medico_id"]);
         $data = $stmt->fetchAll();
-        if($data)
+        if ($data)
         {
-        foreach ($data as $row) {
-            $nome_medico_area =[$param["area_do_medico_nome"] => $row["nome"]];
+            foreach ($data as $row)
+            {
+                $area_consulta=[$param["medico_id"]=>$row["area_do_medico"]];
             }
         }
-        TCombo::reload('form_ConsultaForm', 'medico_id', $nome_medico_area);
+        TCombo::reload('form_ConsultaForm','area_do_medico_nome',$area_consulta);
         TTransaction::close();
     }
+
 }

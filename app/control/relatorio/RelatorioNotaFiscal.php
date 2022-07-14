@@ -22,7 +22,7 @@ class RelatorioNotaFiscal extends TPage
         
       // create the form fields
       $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id_paciente','nome_paciente');
-      $id_area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id_area_do_medico','nome_area_medico');
+      $area_consulta = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id_area_do_medico','area_nome');
       $payment = new TEntry('payment');
       $dtinicio = new  TDateTime ('dtinicio');
       $dtinicio->setMask('dd/mm/yyyy hh:ii');
@@ -37,14 +37,14 @@ class RelatorioNotaFiscal extends TPage
       
       $this->form->addFields( [new TLabel('Paciente')], [$paciente_nome] );
       $this->form->addFields( [new TLabel('Status')], [$radio] );
-      $this->form->addFields( [new TLabel('Área da Consulta')], [$id_area_do_medico] );
+      $this->form->addFields( [new TLabel('Área da Consulta')], [$area_consulta] );
       $this->form->addFields( [new TLabel('Valor da Consulta')], [$payment] );
       $this->form->addFields( [new TLabel('Data Inicio')], [$dtinicio] );
       $this->form->addFields( [new TLabel('Formato')], [$output] );  
       
       
       $paciente_nome->setSize('50%');
-      $id_area_do_medico->setSize('50%');
+      $area_consulta->setSize('50%');
       $payment->setSize('50%');
       $dtinicio->setSize('50%');
       $radio->setSize('50%');
@@ -91,7 +91,7 @@ class RelatorioNotaFiscal extends TPage
         {
           $criteria->add(new TFilter('dtinicio','=',$data->dtinicio));
         }
-        
+
         $nota_fiscal = $repository-> load($criteria);
         if($nota_fiscal)
         {
@@ -142,7 +142,7 @@ class RelatorioNotaFiscal extends TPage
             $style = $colour ? 'datap': 'datai';
             $table->addRow();
             $table->addCell($nota_fiscal->nome_paciente,'center',$style);
-            $table->addCell($nota_fiscal->nome_area_medico,'center',$style);
+            $table->addCell($nota_fiscal->area_nome,'center',$style);
             $table->addCell($nota_fiscal->payment,'center',$style);
             $table->addCell($nota_fiscal->status,'center',$style);
             $table->addCell($nota_fiscal->dtinicio,'center',$style);
@@ -165,6 +165,7 @@ class RelatorioNotaFiscal extends TPage
         
         TTransaction::close();
     }
+    
     catch(Exception $e)
     {
       new TMessage('error', $e->getMessage());
