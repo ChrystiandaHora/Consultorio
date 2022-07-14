@@ -45,7 +45,7 @@ class PaymentList extends TStandardList
         $action = new TAction([$this, 'mudaSelecao']);
         $paciente_nome->setChangeAction($action);
         
-        $area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id_area_do_medico','nome_area_medico');
+        $area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id_area_do_medico','id_area_do_medico');
         $payment = new TEntry('payment');
         $dtinicio = new  TDateTime ('dtinicio');
         
@@ -78,6 +78,8 @@ class PaymentList extends TStandardList
         $btn = $this->form->addAction(_t('Clear'),  new TAction(array($this, 'onClear')), 'fa:eraser red');  
         $this->form->addAction(_t('New'),  new TAction(array('PaymentForm', 'onEdit')), 'fa:plus green');
         
+        //----------------------------------------------------------------------------------------------------------------
+
         // creates a DataGrid
         $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
         $this->datagrid->datatable = 'true';
@@ -86,7 +88,7 @@ class PaymentList extends TStandardList
         
         // creates the datagrid columns
         $column_paciente = new TDataGridColumn('nome_paciente', ('Paciente'), 'left');
-        $column_area_do_medico = new TDataGridColumn('nome_area_medico', ('Área da Consulta'), 'left');
+        $column_area_do_medico = new TDataGridColumn('id_area_do_medico', ('Área da Consulta'), 'left');
         $column_payment = new TDataGridColumn('payment', ('Pagamento'), 'center');
         $column_status = new TDataGridColumn('status', ('Status'), 'center');
         $column_dtinicio = new TDataGridColumn('dtinicio', ('Data da Consulta'), 'center');

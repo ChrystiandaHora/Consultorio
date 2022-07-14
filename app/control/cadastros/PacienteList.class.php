@@ -77,19 +77,19 @@ class PacienteList extends TStandardList
         $this->form->addFields( [new TLabel('Bairro')], [$bairro],[new TLabel('UF')], [$uf] );
         $this->form->addFields( [new TLabel('Complemento')], [$complemento], [new TLabel('CPF')], [$cpf] );
         
-        $id->setSize('400');
-        $nome->setSize('400');
-        $sexo->setSize('400');
-        $idade->setSize('400');
-        $cpf->setSize('400');
-        $endereco->setSize('400');
-        $cidade->setSize('400');
-        $numero->setSize('400');
-        $bairro->setSize('400');
-        $uf->setSize('400');
-        $complemento->setSize('400');
-        $telefone->setSize('400');
-        $email->setSize('400');
+        $id->setSize('30%');
+        $nome->setSize('80%');
+        $sexo->setSize('80%');
+        $idade->setSize('80%');
+        $cpf->setSize('80%');
+        $endereco->setSize('80%');
+        $cidade->setSize('80%');
+        $numero->setSize('80%');
+        $bairro->setSize('80%');
+        $uf->setSize('80%');
+        $complemento->setSize('80%');
+        $telefone->setSize('80%');
+        $email->setSize('80%');
 
         // keep the form filled during navigation with session data
         $this->form->setData( TSession::getValue('Paciente_filter_data') );

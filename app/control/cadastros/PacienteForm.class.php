@@ -63,41 +63,41 @@ class PacienteForm extends TStandardForm
         $this->form->addFields( [new TLabel('UF <font color="red">*</font>')], [$uf], [new TLabel('E-Mail <font color="red">*</font>')], [$email] );
         
         $id->setEditable(FALSE);
-        $id->setSize('400');
+        $id->setSize('30%');
 
-        $nome->setSize('400');
+        $nome->setSize('80%');
         $nome->addValidation(('Nome'), new TRequiredValidator );
 
-        $sexo->setSize('400');
+        $sexo->setSize('80%');
         $sexo->addValidation(('Sexo'), new TRequiredValidator );
 
-        $idade->setSize('400');
+        $idade->setSize('80%');
         $idade->addValidation(('Idade'), new TRequiredValidator );
 
-        $cpf->setSize('400');
+        $cpf->setSize('80%');
         $cpf->addValidation(('CPF'), new TRequiredValidator );
 
-        $endereco->setSize('400');
+        $endereco->setSize('80%');
         $endereco->addValidation(('Endereço'), new TRequiredValidator );
 
-        $cidade->setSize('400');
+        $cidade->setSize('80%');
         $cidade->addValidation(('Cidade'), new TRequiredValidator );
 
-        $numero->setSize('400');
+        $numero->setSize('80%');
         $numero->addValidation(('Número'), new TRequiredValidator );
 
-        $bairro->setSize('400');
+        $bairro->setSize('80%');
         $bairro->addValidation(('Bairro'), new TRequiredValidator );
 
-        $uf->setSize('400');
+        $uf->setSize('80%');
         $uf->addValidation(('UF'), new TRequiredValidator );
 
-        $complemento->setSize('400');
+        $complemento->setSize('80%');
 
-        $telefone->setSize('400');
+        $telefone->setSize('80%');
         $telefone->addValidation(('Telefone'), new TRequiredValidator );
 
-        $email->setSize('400');
+        $email->setSize('80%');
         $email->addValidation(('E-mail'), new TRequiredValidator );
         
         // create the form actions

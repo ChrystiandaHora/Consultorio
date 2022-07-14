@@ -37,7 +37,7 @@ class PaymentForm extends TStandardForm
         $action = new TAction([$this, 'mudaSelecao']);
         $paciente_nome->setChangeAction($action);
         
-        $area_do_medico = new TDBCombo('id_area_do_medico','permission','consulta','id','area_do_medico_nome');
+        $area_do_medico = new TDBCombo('id_area_do_medico','permission','consulta','area_do_medico_nome','area_do_medico_nome');
 
         $payment = new TEntry('payment');
         $payment->setMask('999,99');

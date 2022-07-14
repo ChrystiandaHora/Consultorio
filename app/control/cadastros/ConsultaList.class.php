@@ -66,13 +66,13 @@ class ConsultaList extends TStandardList
         $this->form->addFields( [new TLabel('Médico')], [$medico_id], [new TLabel('Área da Consulta')], [$area_da_consulta]);
         $this->form->addFields([new TLabel('Data Início da Consulta')], [$dtinicio] , [new TLabel('Data Fim da Consulta')],[$dtfim]);
 
-        $id->setSize('400');
-        $titulo->setSize('400');
-        $area_da_consulta->setSize('400');
-        $paciente_id->setSize('400');
-        $medico_id->setSize('400');
-        $dtinicio->setSize('400');
-        $dtfim->setSize('400');
+        $id->setSize('30%');
+        $titulo->setSize('80%');
+        $area_da_consulta->setSize('80%');
+        $paciente_id->setSize('80%');
+        $medico_id->setSize('80%');
+        $dtinicio->setSize('80%');
+        $dtfim->setSize('80%');
 
         // keep the form filled during navigation with session data
         $this->form->setData( TSession::getValue('Consulta_filter_data') );

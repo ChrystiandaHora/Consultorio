@@ -53,27 +53,27 @@ class MedicoForm extends TStandardForm
         $this->form->addFields( [new TLabel('Area de Atuação <font color="red">*</font>')], [$area_do_medico] , [new TLabel('E-Mail <font color="red">*</font>')], [$email] );
         
         $id->setEditable(FALSE);
-        $id->setSize('400');
+        $id->setSize('30%');
 
-        $nome->setSize('400');
+        $nome->setSize('80%');
         $nome->addValidation(('Nome'), new TRequiredValidator );
 
-        $sexo->setSize('400');
+        $sexo->setSize('80%');
         $sexo->addValidation(('Sexo'), new TRequiredValidator );
 
-        $idade->setSize('400');
+        $idade->setSize('80%');
         $idade->addValidation(('Idade'), new TRequiredValidator );
 
-        $cpf->setSize('400');
+        $cpf->setSize('80%');
         $cpf->addValidation(('CPF'), new TRequiredValidator );
         
-        $area_do_medico->setSize('400');
+        $area_do_medico->setSize('80%');
         $area_do_medico->addValidation(('Area de Atuacao'), new TRequiredValidator );
         
-        $telefone->setSize('400');
+        $telefone->setSize('80%');
         $telefone->addValidation(('Telefone'), new TRequiredValidator );
 
-        $email->setSize('400');
+        $email->setSize('80%');
         $email->addValidation(('E-mail'), new TRequiredValidator );
         
         // create the form actions

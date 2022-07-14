@@ -36,11 +36,11 @@ class RelatorioConsulta extends TPage
       $this->form->addFields( [new TLabel('Formato')], [$output] );  
 
       
-      $area_do_medico_nome->setSize('400');
-      $paciente_id->setSize('400');
+      $area_do_medico_nome->setSize('80%');
+      $paciente_id->setSize('80%');
       $titulo->setSize('80%');
-      $medico_id->setSize('400');
-      $dtinicio->setSize('400');
+      $medico_id->setSize('80%');
+      $dtinicio->setSize('80%');
       $dtfim->setSize('80%');
 
       $output-> setUseButton();

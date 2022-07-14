@@ -62,14 +62,14 @@ class MedicoList extends TStandardList
         $this->form->addFields( [new TLabel('Telefone')], [$telefone],[new TLabel('CPF')], [$cpf]);
         $this->form->addFields( [new TLabel('Area de Atuação')], [$area_do_medico] , [new TLabel('E-Mail')], [$email] );
         
-        $id->setSize('400');
-        $nome->setSize('400');
-        $sexo->setSize('400');
-        $idade->setSize('400');
-        $cpf->setSize('400');
-        $area_do_medico->setSize('400');
-        $telefone->setSize('400');
-        $email->setSize('400');
+        $id->setSize('30%');
+        $nome->setSize('80%');
+        $sexo->setSize('80%');
+        $idade->setSize('80%');
+        $cpf->setSize('80%');
+        $area_do_medico->setSize('80%');
+        $telefone->setSize('80%');
+        $email->setSize('80%');
 
         // keep the form filled during navigation with session data
         $this->form->setData( TSession::getValue('Medico_filter_data') );
