@@ -24,10 +24,8 @@ class PaymentList extends TStandardList
     public function __construct()
     {
         parent::__construct();
-        parent::setDatabase('permission');            // defines the database
+        parent::setDatabase('sample');            // defines the database
         parent::setActiveRecord('nota_fiscal');   // defines the active record
-        parent::setDefaultOrder('id', 'asc');         // defines the default order
-        parent::addFilterField('id', '=', 'id'); // filterField, operator, formField
         parent::addFilterField('id_paciente', '=', 'id_paciente'); // filterField, operator, formField
         parent::addFilterField('id_area_do_medico', '=', 'id_area_do_medico'); // filterField, operator, formField
         parent::addFilterField('payment', 'like', 'payment');
@@ -39,13 +37,13 @@ class PaymentList extends TStandardList
         $this->form->setFormTitle('Nota Fiscal');
         
         // create the form fields
-        $paciente_nome = new TDBCombo('id_paciente','permission','nota_fiscal','id','nome_paciente');
+        $paciente = new TDBCombo('id_paciente','sample','nota_fiscal','id','nome_paciente');
         $radio = new TRadioGroup('status');
         
         $action = new TAction([$this, 'mudaSelecao']);
-        $paciente_nome->setChangeAction($action);
+        $paciente->setChangeAction($action);
         
-        $area_do_medico = new TDBCombo('id_area_do_medico','permission','nota_fiscal','id_area_do_medico','id_area_do_medico');
+        $area_do_medico = new TDBCombo('id_area_do_medico','sample','nota_fiscal','id','id_area_do_medico');
         $payment = new TEntry('payment');
         $dtinicio = new  TDateTime ('dtinicio');
         
@@ -57,13 +55,13 @@ class PaymentList extends TStandardList
         $radio->setValue('');
        
         // add the fields
-        $this->form->addFields( [new TLabel('Paciente')], [$paciente_nome] );
+        $this->form->addFields( [new TLabel('Paciente')], [$paciente] );
         $this->form->addFields( [new TLabel('Status')], [$radio] );
         $this->form->addFields( [new TLabel('Área da Consulta')], [$area_do_medico] );
         $this->form->addFields( [new TLabel('Pagamento')], [$payment] );
         $this->form->addFields( [new TLabel('Data Inicio')], [$dtinicio] );
 
-        $paciente_nome->setSize('50%');
+        $paciente->setSize('50%');
         $area_do_medico->setSize('50%');
         $payment->setSize('50%');
         $dtinicio->setSize('50%');
@@ -190,26 +188,26 @@ class PaymentList extends TStandardList
     {
         TTransaction::open('sample');
         $conn = TTransaction::get();
-        //pegando o id da area da consulta
+        //pegando o id do paciente através do param
         $stmt = $conn->query('SELECT id_paciente FROM nota_fiscal WHERE id ='.$param["id_paciente"]);
         $data = $stmt->fetchAll();
         if($data)
         {
-        foreach ($data as $row) {
-            $id_area_do_medico = $row["id_paciente"];
+            foreach ($data as $row) {
+                $id_area_do_medico = $row["id_paciente"];
             }
         }
-        //pegando o nome do medico baseado na sua id da area antes pega
-        $stmt = $conn->query('SELECT id_area_do_medico FROM nota_fiscal WHERE id ='.$id_area_do_medico);
-        $data = $stmt->fetchAll();
-        if($data)
+        //pegando a area do medico relacionado ao id do paciente encontrado acima
+        $stmt = $conn->query('SELECT area_do_medico FROM medico WHERE id ='.$id_area_do_medico);
+        $data2 = $stmt->fetchAll();
+        if($data2)
         {
-        foreach ($data as $row) {
-            $medico_area =[$id_area_do_medico => $row["id_area_do_medico"]];
+            foreach ($data2 as $row) {
+                $area =[$id_area_do_medico => $row["area_do_medico"]];
             }
         }
-        //imprimindo o TCombo
-        TCombo::reload('form_search_Pagamento', 'id_area_do_medico', $medico_area);
+        //imprimindo no TCombo
+        TCombo::reload('form_search_Pagamento', 'id_area_do_medico', $area);
         TTransaction::close();
     }
     public function onClear()

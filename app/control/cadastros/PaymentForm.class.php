@@ -23,7 +23,7 @@ class PaymentForm extends TStandardForm
         
         $ini  = AdiantiApplicationConfig::get();
         
-        $this->setDatabase('permission');              // defines the database
+        $this->setDatabase('sample');              // defines the database
         $this->setActiveRecord('nota_fiscal');     // defines the active record
         
         // creates the form
@@ -32,12 +32,12 @@ class PaymentForm extends TStandardForm
         
         // create the form fields
         $id = new TEntry('id');
-        $paciente_nome = new TDBCombo('id_paciente','permission','consulta','paciente_id','nome_paciente');
+        $paciente_nome = new TDBCombo('id_paciente','sample','consulta','paciente_id','nome_paciente');
         
         $action = new TAction([$this, 'mudaSelecao']);
         $paciente_nome->setChangeAction($action);
         
-        $area_do_medico = new TDBCombo('id_area_do_medico','permission','consulta','area_do_medico_nome','area_do_medico_nome');
+        $area_do_medico = new TDBCombo('id_area_do_medico','sample','consulta','area_do_medico_nome','area_do_medico_nome');
 
         $payment = new TEntry('payment');
         $payment->setMask('999,99');
@@ -97,26 +97,29 @@ class PaymentForm extends TStandardForm
     {
         TTransaction::open('sample');
         $conn = TTransaction::get();
-        //pegando o id da area da consulta
-        $stmt = $conn->query('SELECT area_do_medico_nome FROM consulta WHERE id ='.$param["id_paciente"]);
+        //pegando o id do paciente através do param
+        $stmt = $conn->query('SELECT paciente_id FROM consulta WHERE paciente_id ='.$param["id_paciente"]);
         $data = $stmt->fetchAll();
         if($data)
         {
-        foreach ($data as $row) {
-            $id_area_do_medico = $row["area_do_medico_nome"];
+            foreach ($data as $row) {
+                $medico = $row["paciente_id"];
             }
         }
-        //pegando o nome do medico baseado na sua id da area antes pega
-        $stmt = $conn->query('SELECT area_do_medico FROM medico WHERE id ='.$id_area_do_medico);
-        $data = $stmt->fetchAll();
-        if($data)
+        //pegando a area do medico relacionado ao id do paciente encontrado acima
+        $stmt = $conn->query('SELECT area_do_medico_nome FROM consulta WHERE paciente_id ='.$medico);
+        $data2 = $stmt->fetchAll();
+        if($data2)
         {
-        foreach ($data as $row) {
-            $nome_medico_area =[$id_area_do_medico => $row["area_do_medico"]];
+            foreach ($data2 as $row) {
+                $area_consulta =[$medico => $row["area_do_medico_nome"]];
             }
         }
         //imprimindo o TCombo
-        TCombo::reload('form_PaymentForm', 'id_area_do_medico', $nome_medico_area);
+        // echo '<pre>';
+        // var_dump($data,$data2,$area_consulta);
+        // echo '</pre>';
+        TCombo::reload('form_PaymentForm', 'id_area_do_medico', $area_consulta);
         TTransaction::close();
     }
 }

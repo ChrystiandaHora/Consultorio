@@ -42,13 +42,13 @@ class ConsultaList extends TStandardList
         // create the form fields
         $id = new TEntry('id');
 
-        $paciente_id = new TDBCombo('paciente_id','sample','paciente','id','nome');
-        $area_da_consulta = new TDBCombo('area_do_medico_nome','sample','medico','id','area_do_medico');
+        $paciente_id = new TDBCombo('paciente_id','sample','consulta','id','nome_paciente');
+        $area_da_consulta = new TDBCombo('area_do_medico_nome','sample','consulta','id','area_nome');
 
         $action = new TAction([$this, 'mudaSelecao']);
         $area_da_consulta->setChangeAction($action);
 
-        $medico_id = new TDBCombo('medico_id','sample','medico','id','nome');
+        $medico_id = new TDBCombo('medico_id','sample','consulta','id','nome_medico');
         $titulo = new TCombo('titulo');
         $titulo -> addItems(['Consulta - Primeira Vez'=>'Consulta - Primeira Vez com o Médico(a)','Consulta - Retorno'=>'Consulta - Retorno', 'Exame'=>'Realização de Exame']);
         $dtinicio = new  TDateTime ('dtinicio');
@@ -93,7 +93,7 @@ class ConsultaList extends TStandardList
         $column_id = new TDataGridColumn('id', 'Id', 'center', 50);
         $column_paciente_id = new TDataGridColumn('nome_paciente', ('Paciente'), 'left');
         $column_titulo = new TDataGridColumn('titulo', ('Título'), 'left');
-        $column_area_da_consulta = new TDataGridColumn('area_do_medico_nome', ('Área da Consulta'), 'left');
+        $column_area_da_consulta = new TDataGridColumn('area_nome', ('Área da Consulta'), 'left');
         $column_medico_id = new TDataGridColumn('nome_medico', ('Médico'), 'left');
         $column_dia_inicio = new TDataGridColumn('dtinicio', ('Data Início da Consulta'), 'left');
         $column_dia_fim = new TDataGridColumn('dtfim', ('Data Fim da Consulta'), 'left');

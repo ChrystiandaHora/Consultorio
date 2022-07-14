@@ -46,10 +46,10 @@ class Consulta extends TRecord
         return $this->medico->nome;
     }
 
-    public function get_area_do_medico_nome()
+    public function get_area_nome()
     {
         if (empty($this->medico))
-            $this->medico = new Medico($this->medico_id);
+            $this->medico = new Medico($this->area_do_medico_nome);
         return $this->medico->area_do_medico;
     }
 
