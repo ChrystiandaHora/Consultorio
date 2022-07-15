@@ -91,12 +91,12 @@ class ConsultaList extends TStandardList
         
         // creates the datagrid columns
         $column_id = new TDataGridColumn('id', 'Id', 'center', 50);
-        $column_paciente_id = new TDataGridColumn('nome_paciente', ('Paciente'), 'left');
-        $column_titulo = new TDataGridColumn('titulo', ('Título'), 'left');
-        $column_area_da_consulta = new TDataGridColumn('area_nome', ('Área da Consulta'), 'left');
-        $column_medico_id = new TDataGridColumn('nome_medico', ('Médico'), 'left');
-        $column_dia_inicio = new TDataGridColumn('dtinicio', ('Data Início da Consulta'), 'left');
-        $column_dia_fim = new TDataGridColumn('dtfim', ('Data Fim da Consulta'), 'left');
+        $column_paciente_id = new TDataGridColumn('nome_paciente', ('Paciente'), 'center');
+        $column_titulo = new TDataGridColumn('titulo', ('Título'), 'center');
+        $column_area_da_consulta = new TDataGridColumn('area_nome', ('Área da Consulta'), 'center');
+        $column_medico_id = new TDataGridColumn('nome_medico', ('Médico'), 'center');
+        $column_dia_inicio = new TDataGridColumn('dtinicio', ('Data Início da Consulta'), 'center');
+        $column_dia_fim = new TDataGridColumn('dtfim', ('Data Fim da Consulta'), 'center');
 
 
         // add the columns to the DataGrid
