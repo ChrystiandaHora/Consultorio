@@ -42,7 +42,7 @@ class RelatorioMedico extends TPage
       $this->form->addFields( [new TLabel('Area de Atuação')], [$area_do_medico] , [new TLabel('E-Mail')], [$email] );
       $this->form->addFields( [new TLabel('Formato')], [$output] );  
       
-      $nome->setSize('80%');
+      $nome->setSize('30%');
       $sexo->setSize('80%');
       $idade->setSize('80%');
       $cpf->setSize('80%');      

@@ -88,13 +88,13 @@ class MedicoList extends TStandardList
         
         // creates the datagrid columns
         $column_id = new TDataGridColumn('id', 'Id', 'center', 50);
-        $column_nome = new TDataGridColumn('nome', ('Nome'), 'left');
-        $column_sexo = new TDataGridColumn('sexo', ('Sexo'), 'left');
-        $column_idade = new TDataGridColumn('idade', ('Idade'), 'left');
-        $column_cpf = new TDataGridColumn('cpf', ('CPF'), 'left');
-        $column_area_do_medico = new TDataGridColumn('area_do_medico', ('Área de Atuação'), 'left');
-        $column_telefone = new TDataGridColumn('telefone', ('Telefone'), 'left');
-        $column_email = new TDataGridColumn('email', ('E-Mail'), 'left');
+        $column_nome = new TDataGridColumn('nome', ('Nome'), 'center');
+        $column_sexo = new TDataGridColumn('sexo', ('Sexo'), 'center');
+        $column_idade = new TDataGridColumn('idade', ('Idade'), 'center');
+        $column_cpf = new TDataGridColumn('cpf', ('CPF'), 'center');
+        $column_area_do_medico = new TDataGridColumn('area_do_medico', ('Área de Atuação'), 'center');
+        $column_telefone = new TDataGridColumn('telefone', ('Telefone'), 'center');
+        $column_email = new TDataGridColumn('email', ('E-Mail'), 'center');
 
 
         // add the columns to the DataGrid

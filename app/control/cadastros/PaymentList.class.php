@@ -85,8 +85,8 @@ class PaymentList extends TStandardList
         $this->datagrid->setHeight(320);
         
         // creates the datagrid columns
-        $column_paciente = new TDataGridColumn('nome_paciente', ('Paciente'), 'left');
-        $column_area_do_medico = new TDataGridColumn('area_nome', ('Área da Consulta'), 'left');
+        $column_paciente = new TDataGridColumn('nome_paciente', ('Paciente'), 'center');
+        $column_area_do_medico = new TDataGridColumn('area_nome', ('Área da Consulta'), 'center');
         $column_payment = new TDataGridColumn('payment', ('Pagamento'), 'center');
         $column_status = new TDataGridColumn('status', ('Status'), 'center');
         $column_dtinicio = new TDataGridColumn('dtinicio', ('Data da Consulta'), 'center');

@@ -108,18 +108,18 @@ class PacienteList extends TStandardList
         
         // creates the datagrid columns
         $column_id = new TDataGridColumn('id', 'Id', 'center', 50);
-        $column_nome = new TDataGridColumn('nome', ('Nome'), 'left');
-        $column_sexo = new TDataGridColumn('sexo', ('Sexo'), 'left');
-        $column_idade = new TDataGridColumn('idade', ('Idade'), 'left');
-        $column_cpf = new TDataGridColumn('cpf', ('CPF'), 'left');
-        $column_endereco = new TDataGridColumn('endereco', ('Endereço'), 'left');
-        $column_cidade = new TDataGridColumn('cidade', ('Cidade'), 'left');
-        $column_numero = new TDataGridColumn('numero', ('Número'), 'left');
-        $column_bairro = new TDataGridColumn('bairro', ('Bairro'), 'left');
-        $column_uf = new TDataGridColumn('uf', ('UF'), 'left');
-        $column_complemento = new TDataGridColumn('complemento', ('Complemento'), 'left');
-        $column_telefone = new TDataGridColumn('telefone', ('Telefone'), 'left');
-        $column_email = new TDataGridColumn('email', ('E-Mail'), 'left');
+        $column_nome = new TDataGridColumn('nome', ('Nome'), 'center');
+        $column_sexo = new TDataGridColumn('sexo', ('Sexo'), 'center');
+        $column_idade = new TDataGridColumn('idade', ('Idade'), 'center');
+        $column_cpf = new TDataGridColumn('cpf', ('CPF'), 'center');
+        $column_endereco = new TDataGridColumn('endereco', ('Endereço'), 'center');
+        $column_cidade = new TDataGridColumn('cidade', ('Cidade'), 'center');
+        $column_numero = new TDataGridColumn('numero', ('Número'), 'center');
+        $column_bairro = new TDataGridColumn('bairro', ('Bairro'), 'center');
+        $column_uf = new TDataGridColumn('uf', ('UF'), 'center');
+        $column_complemento = new TDataGridColumn('complemento', ('Complemento'), 'center');
+        $column_telefone = new TDataGridColumn('telefone', ('Telefone'), 'center');
+        $column_email = new TDataGridColumn('email', ('E-Mail'), 'center');
 
 
         // add the columns to the DataGrid
