@@ -72,7 +72,7 @@ class ConsultaList extends TStandardList
         $paciente_id->setSize('80%');
         $medico_id->setSize('80%');
         $dtinicio->setSize('80%');
-        $dtfim->setSize('80%');
+        $dtfim->setSize('80%'); 
 
         // keep the form filled during navigation with session data
         $this->form->setData( TSession::getValue('Consulta_filter_data') );
