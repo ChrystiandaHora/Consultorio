@@ -210,7 +210,7 @@ class PaymentList extends TStandardList
         echo '<pre>';
         var_dump($data,$data2,$area_consulta);
         echo '</pre>';
-        TCombo::reload('form_search_Consulta', 'id_area_do_medico', $area_consulta);
+        TCombo::reload('form_search_Pagamento', 'id_area_do_medico', $area_consulta);
         TTransaction::close();
     }
     public function onClear()
